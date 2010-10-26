@@ -5,6 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
+    (r'^users/$', 'main.views.users'),
+    (r'^users/(\d+)/$', 'main.views.users'),
     # Example:
     # (r'^ideamine/', include('ideamine.foo.urls')),
 
