@@ -81,7 +81,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/sean/Python/ideamine/ideamine/templates"
+    "/home/sean/Python/ideamine/ideamine/templates",
+    "/home/dnugent/Documents/Programming/projects/ideamine/ideamine/templates"
 )
 
 INSTALLED_APPS = (
