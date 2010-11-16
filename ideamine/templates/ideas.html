@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+
+{% block title %}Ideas{% endblock %}
+
+{% block content %}
+<ul>
+  {% for idea in ideas %}
+  <li>{{ idea.owner }} - {{ idea.shortName }} - {{ idea.desc }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
