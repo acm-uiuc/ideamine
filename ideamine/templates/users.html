@@ -5,6 +5,7 @@
 {% block content %}
 <table>
   <tr>
+	<th>id</th>
 	<th>username</th>
 	<th>first_name</th>
 	<th>last_name</th>
@@ -17,6 +18,7 @@
   </tr>
   {% for user in object_list %}
   <tr>
+	<td>{{ user.id }}</td>
 	<td>{{ user.username }}</td>
 	<td>{{ user.first_name }}</td>
 	<td>{{ user.last_name }}</td>

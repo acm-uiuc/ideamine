@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+
+{% block title %}{{ idea.short_name|title }}{% endblock %}
+
+{% block content %}
+<h2>{{ idea.short_name|title }}</h2>
+<table>
+  <tr>
+	<th>Owner:</th>
+	<td>{{ idea.owner.username }}</td>
+  </tr>
+  <tr>
+	<th>Created:</th>
+	<td>{{ idea.created_at }}</td>
+  </tr>
+  <tr>
+	<th>Current Members:</th>
+	<td>{{ idea.members.all.count }}</td>
+  </tr>
+</table>
+{% endblock %}

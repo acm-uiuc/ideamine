@@ -5,6 +5,7 @@
 {% block content %}
 <table>
   <tr>
+	<th>id</th>
 	<th>owner</th>
 	<th>short_name</th>
 	<th>desc</th>
@@ -15,6 +16,7 @@
   </tr>
   {% for idea in object_list %}
   <tr>
+	<td>{{ idea.id }}</td>
 	<td>{{ idea.owner }}</td>
 	<td>{{ idea.short_name }}</td>
 	<td>{{ idea.desc }}</td>
