@@ -1,14 +1,16 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
+from django.views.generic import list_detail
+from main.models import Idea, User
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
-    (r'^users/$', 'main.views.users'),
-    (r'^users/(\d+)/$', 'main.views.users'),
-    (r'^ideas/$', 'main.views.ideas'),
-    (r'^ideas/(\d+)/$', 'main.views.ideas'),
+    (r'^users/$', list_detail.object_list, {"queryset" : User.objects.all(), "template_name" : "users.html"}),
+    (r'^users/(\d+)/$', 'main.views.user'),
+    (r'^ideas/$', list_detail.object_list, {"queryset" : Idea.objects.all(), "template_name" : "ideas.html"}),
+    (r'^ideas/(\d+)/$', 'main.views.idea'),
     # Example:
     # (r'^ideamine/', include('ideamine.foo.urls')),
 

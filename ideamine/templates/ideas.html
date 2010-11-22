@@ -3,9 +3,26 @@
 {% block title %}Ideas{% endblock %}
 
 {% block content %}
-<ul>
-  {% for idea in ideas %}
-  <li>{{ idea.owner }} - {{ idea.short_name }} - {{ idea.desc }}</li>
+<table>
+  <tr>
+	<th>owner</th>
+	<th>short_name</th>
+	<th>desc</th>
+	<th>tags</th>
+	<th>created_at</th>
+	<th>modified_at</th>
+	<th>members</th>
+  </tr>
+  {% for idea in object_list %}
+  <tr>
+	<td>{{ idea.owner }}</td>
+	<td>{{ idea.short_name }}</td>
+	<td>{{ idea.desc }}</td>
+	<td>{{ idea.tags.all|join:", " }}</td>
+	<td>{{ idea.created_at }}</td>
+	<td>{{ idea.modified_at }}</td>
+	<td>{{ idea.members.all|join:", " }}</td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}
