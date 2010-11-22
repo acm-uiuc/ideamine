@@ -9,21 +9,21 @@ class Tag(models.Model):
         return self.name
 
 class Idea(models.Model):
-    owner = models.ForeignKey(User, related_name='ownedIdeas')
-    shortName = models.CharField(max_length=50)
+    owner = models.ForeignKey(User, related_name='owned_ideas')
+    short_name = models.CharField(max_length=50)
     desc = models.TextField()
     tags = models.ManyToManyField(Tag)
-    createdAt = models.DateTimeField(blank=True)
-    modifiedAt = models.DateTimeField(blank=True)
-    members = models.ManyToManyField(User, related_name='joinedIdeas')
+    created_at = models.DateTimeField(blank=True)
+    modified_at = models.DateTimeField(blank=True)
+    members = models.ManyToManyField(User, related_name='joined_ideas')
     
     def __unicode__(self):
-        return self.shortName + ': ' + self.owner.username
+        return self.short_name + ': ' + self.owner.username
 
     def save(self):
-        if self.createdAt == None:
-            self.createdAt = datetime.now()
-        self.modifiedAt = datetime.now()
+        if self.created_at == None:
+            self.created_at = datetime.now()
+        self.modified_at = datetime.now()
         super(Idea, self).save()
 
 # Working on a better way to implement this
@@ -33,14 +33,14 @@ class Comment(models.Model):
     location = models.ForeignKey(Idea)
     parent = models.ForeignKey('self')
     text = models.CharField(max_length=2000)
-    createdAt = models.DateTimeField(blank=True)
-    modifiedAt = models.DateTimeField(blank=True)
+    created_at = models.DateTimeField(blank=True)
+    modified_at = models.DateTimeField(blank=True)
 
     def __unicode__(self):
         return self.id + ': ' + self.owner.username + ' on ' + self.location
 
     def save(self):
-        if self.createdAt == None:
-            self.createdAt = datetime.now()
-        self.modifiedAt = datetime.now()
+        if self.created_at == None:
+            self.created_at = datetime.now()
+        self.modified_at = datetime.now()
         super(Idea, self).save()
