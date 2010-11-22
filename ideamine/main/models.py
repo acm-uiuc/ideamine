@@ -13,14 +13,12 @@ class Idea(models.Model):
     shortName = models.CharField(max_length=50)
     desc = models.TextField()
     tags = models.ManyToManyField(Tag)
-    createdAt = models.DateTimeField()
-    modifiedAt = models.DateTimeField()
-    # So this line doesn't work. I don't know why (yet)
-    # Possibilities: related to MTMField class, related names must be unique
+    createdAt = models.DateTimeField(blank=True)
+    modifiedAt = models.DateTimeField(blank=True)
     members = models.ManyToManyField(User, related_name='joinedIdeas')
     
     def __unicode__(self):
-        return self.shortName + ': ' + self.owner
+        return self.shortName + ': ' + self.owner.username
 
     def save(self):
         if self.createdAt == None:
@@ -35,11 +33,11 @@ class Comment(models.Model):
     location = models.ForeignKey(Idea)
     parent = models.ForeignKey('self')
     text = models.CharField(max_length=2000)
-    createdAt = models.DateTimeField()
-    modifiedAt = models.DateTimeField()
+    createdAt = models.DateTimeField(blank=True)
+    modifiedAt = models.DateTimeField(blank=True)
 
     def __unicode__(self):
-        return self.id + ': ' + self.owner + ' on ' + self.location
+        return self.id + ': ' + self.owner.username + ' on ' + self.location
 
     def save(self):
         if self.createdAt == None:
