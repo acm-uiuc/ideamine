@@ -20,6 +20,8 @@ urlpatterns = patterns('',
      dict(ideas, template_name="ideas.html")),
     (r'^ideas/(?P<object_id>\d+)/$', list_detail.object_detail,
      dict(ideas, template_name='idea.html', template_object_name='idea')),
+    (r'^ideas/(?P<object_id>\d+)/members/$', 'main.views.members',
+     { 'template_name' : 'users.html' }),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
