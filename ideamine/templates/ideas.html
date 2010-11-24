@@ -16,14 +16,18 @@
   </tr>
   {% for idea in object_list %}
   <tr>
-	<td>{{ idea.id }}</td>
-	<td>{{ idea.owner }}</td>
-	<td>{{ idea.short_name }}</td>
+	<td><a href='/ideas/{{ idea.id }}'>{{ idea.id }}</a></td>
+	<td><a href='/users/{{ idea.owner.id }}'>{{ idea.owner }}</a></td>
+	<td><a href='/ideas/{{ idea.id }}'>{{ idea.short_name }}</a></td>
 	<td>{{ idea.desc }}</td>
-	<td>{{ idea.tags.all|join:", " }}</td>
+	<td>{% for tag in idea.tags.all %}
+	  <a href='/tags/{{ tag.id }}'>{{ tag }}</a> 
+	{% endfor %}</td>
 	<td>{{ idea.created_at }}</td>
 	<td>{{ idea.modified_at }}</td>
-	<td>{{ idea.members.all|join:", " }}</td>
+	<td>{% for user in idea.members.all %}
+	  <a href='/users/{{ user.id }}'>{{ user }}</a> 
+	{% endfor %}</td>
   </tr>
   {% endfor %}
 </table>
