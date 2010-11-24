@@ -1,17 +1,17 @@
 {% extends "main.html" %}
 
-{% block title %}{{ user.username }}{% endblock %}
+{% block title %}{{ object.username }}{% endblock %}
 
 {% block content %}
-<h2>{{ user.username }}</h2>
+<h2>{{ object.username }}</h2>
 <table>
   <tr>
 	<th>Name</th>
-	<td>{{ user.first_name|title }} {{ user.last_name|title }}</td>
+	<td>{{ object.first_name|title }} {{ object.last_name|title }}</td>
   </tr>
   <tr>
 	<th>Joined</th>
-	<td>{{ user.date_joined }}</td>
+	<td>{{ object.date_joined }}</td>
   </tr>
 </table>
 {% endblock %}
