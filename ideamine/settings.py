@@ -1,4 +1,4 @@
-# Django settings for ideamine project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -44,19 +44,32 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+# The absolute path of this settings file. We can use this later to write
+# absolute paths that are portable.
+SETTINGS_DIR = os.path.dirname(os.path.realpath(__file__))
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(SETTINGS_DIR, 'media')
+
+# Absolute path to the directory we are serving static files from
+#
+#
+#             THIS IS FOR THE DEVELOPMENT SERVER ONLY
+#
+#
+# This will end up served out of /static/
+STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'cndb!s99!vv)ey7sd=h_v*h!wf-=yv%y4*4fd8lx2@5jw$va3n'
@@ -78,13 +91,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'ideamine.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/home/sean/Python/ideamine/ideamine/templates",
-    "/home/dnugent/Documents/Programming/projects/ideamine/ideamine/templates"
-)
+TEMPLATE_DIRS = (os.path.join(SETTINGS_DIR, 'templates'))
 
 INSTALLED_APPS = (
     'django.contrib.auth',

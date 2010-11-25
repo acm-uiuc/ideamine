@@ -2,8 +2,12 @@
 <html>
 <head>
   <title>Main Template - {% block title %}{% endblock %}</title>
+  <link href="/static/ideamine.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div id="topbar">
+	<span id="user">Logged in as: <a href='/users/{{ user.id }}'>{{ user.username }}</a></span>
+  </div>
   <div id="content">
 	<h1>{{ h1 }}</h1>
 	{% block content %}{% endblock %}
