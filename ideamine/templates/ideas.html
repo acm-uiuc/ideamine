@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% load comments %}
 
 {% block title %}Ideas{% endblock %}
 
@@ -13,6 +14,7 @@
 	<th>created_at</th>
 	<th>modified_at</th>
 	<th>members</th>
+	<th>comments</th>
   </tr>
   {% for idea in object_list %}
   <tr>
@@ -28,6 +30,7 @@
 	<td>{% for user in idea.members.all %}
 	  <a href='/users/{{ user.id }}'>{{ user }}</a> 
 	{% endfor %}</td>
+	<td>{% get_comment_count for idea as comment_count %}{{ comment_count }}</td>
   </tr>
   {% endfor %}
 </table>

@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% load comments %}
 
 {% block title %}{{ idea.short_name|title }}{% endblock %}
 
@@ -18,4 +19,5 @@
 	<td>{{ idea.members.all.count }}</td>
   </tr>
 </table>
+{% render_comment_list for idea %}
 {% endblock %}
