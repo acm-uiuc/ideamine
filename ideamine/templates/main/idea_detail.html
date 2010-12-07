@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% load comments %}
+
+{% block title %}{{ object.short_name|title }}{% endblock %}
+
+{% block content %}
+<h2>{{ object.short_name|title }}</h2>
+<table>
+  <tr>
+	<th>Owner:</th>
+	<td>{{ object.owner.username }}</td>
+  </tr>
+  <tr>
+	<th>Created:</th>
+	<td>{{ object.created_at }}</td>
+  </tr>
+  <tr>
+	<th>Current Members:</th>
+	<td>{{ object.members.all.count }}</td>
+  </tr>
+</table>
+{% render_comment_list for object %}
+{% render_comment_form for object %}
+{% endblock %}

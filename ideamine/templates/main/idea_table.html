@@ -1,12 +1,8 @@
-{% extends "main.html" %}
 {% load comments %}
 
-{% block title %}Ideas{% endblock %}
-
-{% block content %}
 <table>
   <tr>
-	<th>id</th>
+	<th>pk</th>
 	<th>owner</th>
 	<th>short_name</th>
 	<th>desc</th>
@@ -18,20 +14,19 @@
   </tr>
   {% for idea in object_list %}
   <tr>
-	<td><a href='/ideas/{{ idea.id }}'>{{ idea.id }}</a></td>
-	<td><a href='/users/{{ idea.owner.id }}'>{{ idea.owner }}</a></td>
-	<td><a href='/ideas/{{ idea.id }}'>{{ idea.short_name }}</a></td>
+	<td><a href="{% url idea_detail idea.pk %}">{{ idea.pk }}</a></td>
+	<td><a href="{% url user_detail idea.owner.pk %}">{{ idea.owner }}</a></td>
+	<td><a href="{% url idea_detail idea.pk %}">{{ idea.short_name }}</a></td>
 	<td>{{ idea.desc }}</td>
 	<td>{% for tag in idea.tags.all %}
-	  <a href='/tags/{{ tag.id }}'>{{ tag }}</a> 
+	  <a href="{% url tag_detail tag.id %}">{{ tag }}</a> 
 	{% endfor %}</td>
 	<td>{{ idea.created_at }}</td>
 	<td>{{ idea.updated_at }}</td>
 	<td>{% for user in idea.members.all %}
-	  <a href='/users/{{ user.id }}'>{{ user }}</a> 
+	  <a href="{% url user_detail user.pk %}">{{ user }}</a> 
 	{% endfor %}</td>
 	<td>{% get_comment_count for idea as comment_count %}{{ comment_count }}</td>
   </tr>
   {% endfor %}
 </table>
-{% endblock %}

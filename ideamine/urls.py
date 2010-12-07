@@ -12,15 +12,11 @@ ideas = { 'queryset' : Idea.objects.all() }
 urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
 
-    (r'^users/$', list_detail.object_list,
-     dict(users, template_name='users.html')),
-    (r'^users/(?P<object_id>\d+)/$', list_detail.object_detail,
-     dict(users, template_name='user.html')),
+    (r'^users/$', list_detail.object_list, users, 'user_list'),
+    (r'^users/(?P<object_id>\d+)/$', list_detail.object_detail, users, 'user_detail'),
 
-    (r'^ideas/$', list_detail.object_list,
-     dict(ideas, template_name="ideas.html")),
-    (r'^ideas/(?P<object_id>\d+)/$', list_detail.object_detail,
-     dict(ideas, template_name='idea.html', template_object_name='idea')),
+    (r'^ideas/$', list_detail.object_list, ideas, 'idea_list'),
+    (r'^ideas/(?P<object_id>\d+)/$', list_detail.object_detail, ideas, 'idea_detail'
     (r'^ideas/(?P<object_id>\d+)/members/$', 'main.views.members'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
