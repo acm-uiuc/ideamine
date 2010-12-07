@@ -6,7 +6,7 @@
 </head>
 <body>
   <div id="topbar">
-	<span id="user">Logged in as: <a href='/users/{{ user.id }}'>{{ user.username }}</a></span>
+	<span id="user">Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a></span>
   </div>
   <div id="content">
 	<h1>{{ h1 }}</h1>

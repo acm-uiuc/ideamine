@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     (r'^users/(?P<object_id>\d+)/$', list_detail.object_detail, users, 'user_detail'),
 
     (r'^ideas/$', list_detail.object_list, ideas, 'idea_list'),
-    (r'^ideas/(?P<object_id>\d+)/$', list_detail.object_detail, ideas, 'idea_detail'
+    (r'^ideas/(?P<object_id>\d+)/$', list_detail.object_detail, ideas, 'idea_detail'),
     (r'^ideas/(?P<object_id>\d+)/members/$', 'main.views.members'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
