@@ -1,5 +1,6 @@
 {% load comments %}
 
+{% if object_list %}
 <table>
   <tr>
 	<th>pk</th>
@@ -30,3 +31,6 @@
   </tr>
   {% endfor %}
 </table>
+{% else %}
+<p>{{ emptymessage|default:'No Ideas' }}</p>
+{% endif %}
