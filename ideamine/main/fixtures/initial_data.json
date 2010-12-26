@@ -1,0 +1,13 @@
+[
+	{
+		"model" : "main.idea",
+		"pk" : 1,
+		"fields" : {
+			"owner" : 1,
+			"short_name" : "test idea",
+			"desc" : "A long description about this idea",
+			"created_at" : "2010-12-05 17:25:00",
+			"updated_at" : "2010-12-05 17:25:00"
+		}
+	}
+]
