@@ -19,6 +19,14 @@
 	<td>{{ object.members.all.count }}</td>
   </tr>
 </table>
+{% if user == object.owner %}
+{% with object.unconfirmed_members as object_list %}
+{% with True as edit %}
+{% include 'auth/user_table.html' %}
+{% endwith %}{% endwith %}
+{% else %}{% if not user in object.members %}
+<p><a href="{% url user_join_idea object.pk %}">Join Idea</a></p>
+{% endif %}{% endif %}
 {% render_comment_list for object %}
 {% render_comment_form for object %}
 {% endblock %}

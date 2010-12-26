@@ -18,6 +18,7 @@
 {% with object_list as object.owned_ideas %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
+<p><a href="{% url idea_create %}">Create Idea</a></p>
 <h3>Joined Ideas</h3>
 {% with object_list as object.joined_ideas %}
 {% include 'main/idea_table.html' %}

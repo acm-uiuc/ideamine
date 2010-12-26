@@ -34,3 +34,8 @@ def idea_create(request, *args, **kwargs):
     kwargs.update(csrf(request))
     c = RequestContext(request, dict(form=idea_form, **kwargs))
     return render_to_response('main/idea_form.html', c)
+
+@login_required
+def idea_join(request, *args, **kwargs):
+    idea = get_object_or_404(Idea, pk=object_id)
+    return HttpResponse("The goggles! They do nothing!")
