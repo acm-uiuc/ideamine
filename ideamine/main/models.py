@@ -12,9 +12,9 @@ class Idea(models.Model):
     short_name = models.CharField(max_length=50)
     desc = models.TextField()
     tags = models.ManyToManyField(Tag)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    members = models.ManyToManyField(User, related_name='joined_ideas')
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    members = models.ManyToManyField(User, related_name='joined_ideas', editable=False)
     
     def __unicode__(self):
         return self.short_name + ': ' + self.owner.username

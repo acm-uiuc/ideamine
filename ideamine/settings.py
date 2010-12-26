@@ -71,6 +71,9 @@ MEDIA_URL = '/media/'
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/admin_media/'
 
+# URL that we redirect to for user login
+LOGIN_URL = '/login/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'cndb!s99!vv)ey7sd=h_v*h!wf-=yv%y4*4fd8lx2@5jw$va3n'
 

@@ -6,7 +6,13 @@
 </head>
 <body>
   <div id="topbar">
-	<span id="user">Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a></span>
+	<span id="user">
+	  {% if user.is_authenticated %}
+	  Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a>
+	  {% else %}
+	  <a href="{% url login %}">Login</a>
+	  {% endif %}
+	</span>
   </div>
   <div id="content">
 	<h1>{{ h1 }}</h1>
