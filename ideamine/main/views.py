@@ -1,9 +1,10 @@
 # Create your views here.
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import list_detail
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from main.forms import *
 from main.models import *
@@ -18,6 +19,13 @@ def members(request, object_id=None):
     return render_to_response("users.html",
         { 'object_list' : Idea.objects.get(id=object_id).members.all(),
           'h1' : 'members' })
+
+
+# This needs to be reworked, maybe with user profiles
+@login_required
+def redirect_to_user(request, *args, **kwargs):
+    redirect_to = '/users/%d' % (request.user.pk)
+    return HttpResponseRedirect(redirect_to)
 
 @login_required
 def idea_create(request, *args, **kwargs):
@@ -38,4 +46,10 @@ def idea_create(request, *args, **kwargs):
 @login_required
 def idea_join(request, object_id, *args, **kwargs):
     idea = get_object_or_404(Idea, pk=object_id)
-    return HttpResponse("The goggles! They do nothing!")
+    try:
+        idea.members.get(pk=request.user.pk)
+        return HttpResponse("You're already a member")
+    except ObjectDoesNotExist:
+        idea.add_member(request.user)
+        redirect_to = idea.get_absolute_url()
+        return HttpResponseRedirect(redirect_to)

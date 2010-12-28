@@ -15,12 +15,12 @@
   </tr>
 </table>
 <h3>Owned Ideas</h3>
-{% with object_list as object.owned_ideas %}
+{% with object.owned_ideas.all as object_list %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
 <p><a href="{% url idea_create %}">Create Idea</a></p>
 <h3>Joined Ideas</h3>
-{% with object_list as object.joined_ideas %}
+{% with object.joined_ideas.all as object_list %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
 {% endblock %}

@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
 
     (r'^users/(?P<object_id>\d+)', list_detail.object_detail, users, 'user_detail'),
+    (r'^users/self', 'main.views.redirect_to_user', {}, 'user_detail_self'),
     (r'^users', list_detail.object_list, users, 'user_list'),
 
     (r'^ideas/(?P<object_id>\d+)/members', 'main.views.members'),
@@ -24,6 +25,8 @@ urlpatterns = patterns('',
     (r'^comments', include('django.contrib.comments.urls')),
 
     (r'^login', 'django.contrib.auth.views.login', {}, 'login'),
+    (r'^logout', 'django.contrib.auth.views.logout', 
+     { 'next_page' : '/'}, 'logout'),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
