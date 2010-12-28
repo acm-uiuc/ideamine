@@ -1,6 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import list_detail
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
@@ -36,6 +36,6 @@ def idea_create(request, *args, **kwargs):
     return render_to_response('main/idea_form.html', c)
 
 @login_required
-def idea_join(request, *args, **kwargs):
+def idea_join(request, object_id, *args, **kwargs):
     idea = get_object_or_404(Idea, pk=object_id)
     return HttpResponse("The goggles! They do nothing!")
