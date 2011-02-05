@@ -1,0 +1,13 @@
+{% extends "main.html" %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+  <table>
+	{{ form.as_table }}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Create User">
+</form>
+{% endblock %}

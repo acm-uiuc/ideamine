@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
+from django.contrib.auth.forms import UserCreationForm
 from main.forms import *
 from main.models import *
 
@@ -20,6 +21,20 @@ def members(request, object_id=None):
         { 'object_list' : Idea.objects.get(id=object_id).members.all(),
           'h1' : 'members' })
 
+def user_create(request, *args, **kwargs):
+    if request.method == 'POST':
+        new_user = User()
+        user_form = UserCreationForm(request.POST, instance=new_user)
+        if user_form.is_valid:
+            user_form.save()
+            redirect_to = '/users/self'
+            return HttpResponseRedirect(redirect_to)
+    else:
+        user_form = UserCreationForm()
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(form=user_form, **kwargs))
+    return render_to_response('auth/user_form.html', c)
 
 # This needs to be reworked, maybe with user profiles
 @login_required

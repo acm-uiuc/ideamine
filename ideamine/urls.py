@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     (r'^users/(?P<object_id>\d+)', list_detail.object_detail, users, 'user_detail'),
     (r'^users/self', 'main.views.redirect_to_user', {}, 'user_detail_self'),
+    (r'^users/create', 'main.views.user_create', {}, 'user_create'),
     (r'^users', list_detail.object_list, users, 'user_list'),
 
     (r'^ideas/(?P<object_id>\d+)/members', 'main.views.members'),
