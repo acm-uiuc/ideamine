@@ -7,6 +7,7 @@
 <body>
   <div id="topbar">
 	<span id="user">
+	  <a href="{% url main.views.index %}">Home</a>
 	  {% if user.is_authenticated %}
 	  Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a> <a href="{% url logout %}">Logout</a>
 	  {% else %}
