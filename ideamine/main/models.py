@@ -34,7 +34,11 @@ class Idea(models.Model):
     def add_member(self, new_user):
         relation = JoinedUser(user=new_user, idea=self)
         return relation.save()
-    
+
+    def remove_member(self, user):
+        joineduser = self.joineduser(user)
+        return joineduser.delete()
+
     def __unicode__(self):
         return self.short_name + ': ' + self.owner.username
 

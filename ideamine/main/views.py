@@ -68,3 +68,14 @@ def idea_join(request, object_id, *args, **kwargs):
         idea.add_member(request.user)
         redirect_to = idea.get_absolute_url()
         return HttpResponseRedirect(redirect_to)
+
+@login_required
+def idea_leave(request, object_id, *args, **kwargs):
+    idea = get_obbject_or_404(Idea, pk=object_id)
+    try:
+        idea.members.get(pk=request.user.pk)
+        idea.remove_member(request.user)
+        redirect_to = idea.get_absolute_url()
+        return HttpResponseRedirect(redirect_to)
+    except ObjectDoesNotExist:
+        return HttpResponse("You aren't a member of this project")
