@@ -26,6 +26,7 @@
 {% endwith %}{% endwith %}
 {% else %}{% if not user in object.members %}
 <p><a href="{% url user_join_idea object.pk %}">Join Idea</a></p>
+{% else %}<p><a href="{% url user_leave_idea object.pk %}">Leave Idea</a></p>
 {% endif %}{% endif %}
 {% render_comment_list for object %}
 {% render_comment_form for object %}

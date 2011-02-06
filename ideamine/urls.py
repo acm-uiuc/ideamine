@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 
     (r'^ideas/(?P<object_id>\d+)/members', 'main.views.members'),
     (r'^ideas/(?P<object_id>\d+)/join', 'main.views.idea_join', {}, 'user_join_idea'),
+    (r'^ideas/(?P<object_id>\d+)/leave', 'main.views.idea_leave', {}, 'user_leave_idea'),
     (r'^ideas/(?P<object_id>\d+)', list_detail.object_detail, ideas, 'idea_detail'),
     (r'^ideas/create', 'main.views.idea_create', {}, 'idea_create'),
     (r'^ideas', list_detail.object_list, ideas, 'idea_list'),
