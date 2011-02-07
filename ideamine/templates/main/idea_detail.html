@@ -24,7 +24,7 @@
 {% with True as edit %}
 {% include 'auth/user_table.html' %}
 {% endwith %}{% endwith %}
-{% else %}{% if not user in object.members %}
+{% else %}{% if not user in object.members.all %}
 <p><a href="{% url user_join_idea object.pk %}">Join Idea</a></p>
 {% else %}<p><a href="{% url user_leave_idea object.pk %}">Leave Idea</a></p>
 {% endif %}{% endif %}
