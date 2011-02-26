@@ -3,6 +3,9 @@
 {% block title %}Add Idea{% endblock %}
 
 {% block content %}
+{% if errors %}
+<div>{{ errors }}</div>
+{% endif %}
 <form action="" method="post">
   <table>
 	{{ form.as_table }}

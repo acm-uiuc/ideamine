@@ -8,14 +8,18 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.name
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
 class Idea(models.Model):
-    owner = models.ForeignKey(User, related_name='owned_ideas')
+    owner = models.ForeignKey(UserProfile, related_name='owned_ideas')
     short_name = models.CharField(max_length=50)
     desc = models.TextField()
     tags = models.ManyToManyField(Tag, related_name='ideas')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
-    members = models.ManyToManyField(User, related_name='joined_ideas', through='JoinedUser', editable=False)
+    members = models.ManyToManyField(UserProfile, related_name='joined_ideas',
+                                     through='JoinedUser', editable=False)
 
     def confirm_member(self, user):
         try:
@@ -23,20 +27,20 @@ class Idea(models.Model):
             joineduser.confirmed = True
             joineduser.save()
         except ObjectDoesNotExist:
-            joineduser = JoinedUser(user=user, idea=self, confirmed=True)
+            joineduser = JoinedUser(user=user.get_profile(), idea=self, confirmed=True)
 
     def unconfirmed_members(self):
         return self.members.filter(joineduser__confirmed=False)
 
     def joineduser(self, user):
-        return JoinedUser.objects.get(user=user, idea=self)
+        return JoinedUser.objects.get(user=user.get_profile(), idea=self)
 
     def add_member(self, new_user):
-        relation = JoinedUser(user=new_user, idea=self)
+        relation = JoinedUser(user=new_user.get_profile(), idea=self)
         return relation.save()
 
     def remove_member(self, user):
-        joineduser = self.joineduser(user)
+        joineduser = self.joineduser(user.get_picture())
         return joineduser.delete()
 
     def __unicode__(self):
@@ -47,6 +51,6 @@ class Idea(models.Model):
         return ('idea_detail', (), { 'object_id' : self.pk })
 
 class JoinedUser(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     idea = models.ForeignKey(Idea)
     confirmed = models.BooleanField(default=False, editable=False)
