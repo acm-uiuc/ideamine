@@ -71,7 +71,7 @@ def idea_join(request, object_id, *args, **kwargs):
 
 @login_required
 def idea_leave(request, object_id, *args, **kwargs):
-    idea = get_obbject_or_404(Idea, pk=object_id)
+    idea = get_object_or_404(Idea, pk=object_id)
     try:
         idea.members.get(pk=request.user.pk)
         idea.remove_member(request.user)
