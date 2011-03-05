@@ -6,9 +6,32 @@
 	top: 0;
 	left: 0;
 	text-align: right;
+	background-color: #E1FCF9;
 }
 
 #user {
+	width:100%
 	position: absolute;
 	right: 1em;
+	background-color: #E1FCF9;
+}
+
+/* Layout for right side widgets */
+#rswidgets {
+	width: 24%;
+	position: right;
+	padding: 5px;
+}
+
+#lsWidgets {
+	width: 24%
+	position: left
+	padding: 5px;
+}
+
+/* Styles and layout for central idea widget */
+#ideaWidgets {
+	width: 48%;
+	position: center;
+	padding: 5px;
 }
