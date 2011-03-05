@@ -11,11 +11,17 @@ class Tag(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
+    def username(self):
+        return self.user.username()
+
+    def __unicode__(self):
+        return self.username()
+
 class Idea(models.Model):
     owner = models.ForeignKey(UserProfile, related_name='owned_ideas')
-    short_name = models.CharField(max_length=50)
+    short_name = models.CharField(max_length=50, unique=True)
     desc = models.TextField()
-    tags = models.ManyToManyField(Tag, related_name='ideas')
+    tags = models.ManyToManyField(Tag, related_name='ideas', blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     members = models.ManyToManyField(UserProfile, related_name='joined_ideas',

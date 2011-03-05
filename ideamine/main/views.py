@@ -61,13 +61,10 @@ def idea_create(request, *args, **kwargs):
     if request.method == 'POST':
         idea = Idea(owner=request.user.get_profile())
         idea_form = IdeaForm(request.POST, instance=idea)
-        try:
-            if idea_form.is_valid:
-                idea_form.save()
-                redirect_to = idea.get_absolute_url()
-                return HttpResonseRedirect(redirect_to)
-        except (ValidationError, ValueError) as e:
-            kwargs = dict(errors=e, **kwargs)
+        if idea_form.is_valid:
+            idea_form.save()
+            redirect_to = idea.get_absolute_url()
+            return HttpResponseRedirect(redirect_to)
     else:
         idea_form = IdeaForm()
 
