@@ -30,11 +30,8 @@ def user_create(request, *args, **kwargs):
         user_form = UserCreationForm(request.POST, instance=new_user)
         if user_form.is_valid():
             user_form.save()
-            username = request.POST.get('username', '')
-            password = request.POST.get('password', '')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_active:
-                login(request, user)
+            new_user.backend = "django.contrib.auth.backends.ModelBackend"
+            login(request, new_user)
             redirect_to = '/users/self'
             return HttpResponseRedirect(redirect_to)
     else:
