@@ -1,6 +1,7 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db.models.signals import post_save
@@ -29,6 +30,11 @@ def user_create(request, *args, **kwargs):
         user_form = UserCreationForm(request.POST, instance=new_user)
         if user_form.is_valid():
             user_form.save()
+            username = request.POST.get('username', '')
+            password = request.POST.get('password', '')
+            user = auth.authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                auth.login(request, user)
             redirect_to = '/users/self'
             return HttpResponseRedirect(redirect_to)
     else:
