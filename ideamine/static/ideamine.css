@@ -8,14 +8,15 @@
 	background-repeat:repeat-x;
 }
 body {
-margin: 0;
+	min-width:800px;
+	margin: 0;
 }
 #user {
 	position: relative;
 	right: 1em;
 }
 
-#content {
+#container {
 	padding-right: 400px;
 	margin: 1em;
 }
@@ -25,12 +26,12 @@ margin: 0;
 	float: left;
 }
 
-#center {
+#left {
 	width: 100%;
 }
 
 /* Layout for side widgets */
-#rsWidgets {
+#right {
 	width: 400px;
 	margin-right: -400px;
 }

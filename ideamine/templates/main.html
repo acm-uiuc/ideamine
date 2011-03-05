@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>{% block title %}{% endblock %}</title>
-  <link href="/static/ideamine.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-  <div id="topbar">
-	<span id="user">
-	  <a href="{% url main.views.index %}">Home</a>
-	  {% if user.is_authenticated %}
-	  Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a> <a href="{% url logout %}">Logout</a>
-	  {% else %}
-	  <a href="{% url user_create %}">Register</a> <a href="{% url login %}">Login</a>
-	  {% endif %}
-	</span>
-  </div>
-  <div id="content">
-	{% block content %}{% endblock %}
-  </div>
-</body>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="/static/ideamine.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="topbar">
+      <span id="user">
+        <a href="{% url main.views.index %}">Home</a>
+        {% if user.is_authenticated %}
+        Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a> <a href="{% url logout %}">Logout</a>
+        {% else %}
+        <a href="{% url user_create %}">Register</a> <a href="{% url login %}">Login</a>
+        {% endif %}
+      </span>
+    </div>
+    <div id="container">
+      <div id="left" class="column">
+        <p>Main content</p>
+        {% block content %}{% endblock %}
+      </div>
+      <div id="right" class="column">
+        <p>Right side<p>
+        {% block sidebar %}{% endblock %}
+      </div>
+    </div>
+    <div id ="footer">
+    </div>
+  </body>
 </html>
