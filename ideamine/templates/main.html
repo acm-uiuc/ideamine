@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Main Template - {% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock %}</title>
   <link href="/static/ideamine.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -16,7 +16,6 @@
 	</span>
   </div>
   <div id="content">
-	<h1>{{ h1 }}</h1>
 	{% block content %}{% endblock %}
   </div>
 </body>

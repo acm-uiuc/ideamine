@@ -13,8 +13,8 @@ from main.forms import *
 from main.models import *
 
 def index(request):
-    c = RequestContext(request, { 'h1' : 'Index' })
-    return render_to_response("main.html", c)
+    c = RequestContext(request, {})
+    return render_to_response("index.html", c)
 
 def members(request, object_id=None):
     if not object_id:
