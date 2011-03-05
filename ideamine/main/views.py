@@ -32,6 +32,8 @@ def user_create(request, *args, **kwargs):
                 user_form.save()
                 redirect_to = '/users/self'
                 return HttpResponseRedirect(redirect_to)
+            else:
+                HttpResponse("Unexpected: is_valid returned False")
         except ValidationError as e:
             kwargs = dict(errors=e, **kwargs)
     else:
