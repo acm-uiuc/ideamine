@@ -27,15 +27,10 @@ def user_create(request, *args, **kwargs):
     if request.method == 'POST':
         new_user = User()
         user_form = UserCreationForm(request.POST, instance=new_user)
-        try:
-            if user_form.is_valid:
-                user_form.save()
-                redirect_to = '/users/self'
-                return HttpResponseRedirect(redirect_to)
-            else:
-                HttpResponse("Unexpected: is_valid returned False")
-        except ValidationError as e:
-            kwargs = dict(errors=e, **kwargs)
+        if user_form.is_valid():
+            user_form.save()
+            redirect_to = '/users/self'
+            return HttpResponseRedirect(redirect_to)
     else:
         user_form = UserCreationForm()
 
@@ -61,7 +56,7 @@ def idea_create(request, *args, **kwargs):
     if request.method == 'POST':
         idea = Idea(owner=request.user.get_profile())
         idea_form = IdeaForm(request.POST, instance=idea)
-        if idea_form.is_valid:
+        if idea_form.is_valid():
             idea_form.save()
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
