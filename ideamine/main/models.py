@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     def username(self):
-        return self.user.username()
+        return self.user.username
 
     def __unicode__(self):
         return self.username()
