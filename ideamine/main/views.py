@@ -32,9 +32,9 @@ def user_create(request, *args, **kwargs):
             user_form.save()
             username = request.POST.get('username', '')
             password = request.POST.get('password', '')
-            user = auth.authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)
             if user is not None and user.is_active:
-                auth.login(request, user)
+                login(request, user)
             redirect_to = '/users/self'
             return HttpResponseRedirect(redirect_to)
     else:
