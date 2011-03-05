@@ -1,25 +1,23 @@
 #topbar {
 	width: 100%;
-	margin: 0px;
-	padding: 0px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
+	padding: 0;
+	position: relative;
+	top: 0;
 	text-align: right;
 	background-image:url('gradient.jpg');
 	background-repeat:repeat-x;
-	height:25px;
 }
-
+body {
+margin: 0;
+}
 #user {
-	width:100%
-	position: absolute;
+	position: relative;
 	right: 1em;
 }
 
 #content {
-	padding-right: 200px;
-	margin-top:25px;
+	padding-right: 400px;
+	margin: 1em;
 }
 
 #container .column{
@@ -32,9 +30,9 @@
 }
 
 /* Layout for side widgets */
-#rswidgets {
-	width: 200px;
-	margin-right: -200px;
+#rsWidgets {
+	width: 400px;
+	margin-right: -400px;
 }
 
 #footer {
