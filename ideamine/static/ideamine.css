@@ -6,14 +6,14 @@
 	top: 0;
 	left: 0;
 	text-align: right;
-	background-color: #E1FCF9;
+	background-image:url('gradient.jpg');
+	background-repeat:repeat-x;
 }
 
 #user {
 	width:100%
 	position: absolute;
 	right: 1em;
-	background-color: #E1FCF9;
 }
 
 /* Layout for right side widgets */
