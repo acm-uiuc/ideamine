@@ -17,26 +17,25 @@
 }
 
 #container {
-	width: 1000px;
-	margin: 0 auto;
+	padding-right: 200em;
+}
+
+#container .column{
+	position: relative;
+	float: left;
+}
+
+#center {
+	width: 100%;
 }
 
 /* Layout for side widgets */
 #rswidgets {
-	width: 240px;
-	float: right;
-	padding: 5px;
+	width: 200em;
+	margin-right: -200em;
 }
 
-#lsWidgets {
-	width: 240px;
-	float: left
-	padding: 5px;
+#footer {
+	clear: both;
 }
 
-/* Styles and layout for central idea widget */
-#ideaWidgets {
-	width: 480px;
-	float: center;
-	padding: 5px;
-}
