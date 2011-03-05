@@ -1,13 +1,14 @@
 #topbar {
 	width: 100%;
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 0px;
+	left: 0px;
 	text-align: right;
 	background-image:url('gradient.jpg');
 	background-repeat:repeat-x;
+	height:25px;
 }
 
 #user {
@@ -16,8 +17,9 @@
 	right: 1em;
 }
 
-#container {
-	padding-right: 200em;
+#content {
+	padding-right: 200px;
+	margin-top:25px;
 }
 
 #container .column{
@@ -31,8 +33,8 @@
 
 /* Layout for side widgets */
 #rswidgets {
-	width: 200em;
-	margin-right: -200em;
+	width: 200px;
+	margin-right: -200px;
 }
 
 #footer {
