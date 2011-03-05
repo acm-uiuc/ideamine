@@ -16,22 +16,27 @@
 	right: 1em;
 }
 
-/* Layout for right side widgets */
+#container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+/* Layout for side widgets */
 #rswidgets {
-	width: 24%;
-	position: right;
+	width: 240px;
+	float: right;
 	padding: 5px;
 }
 
 #lsWidgets {
-	width: 24%
-	position: left
+	width: 240px;
+	float: left
 	padding: 5px;
 }
 
 /* Styles and layout for central idea widget */
 #ideaWidgets {
-	width: 48%;
-	position: center;
+	width: 480px;
+	float: center;
 	padding: 5px;
 }
