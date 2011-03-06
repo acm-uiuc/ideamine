@@ -39,6 +39,11 @@ body {
 	margin: 0 1em;
 }
 
+.idealist a {
+	color: black;
+	text-decoration: none;
+}
+
 .ideablock{
 	padding: 1em;
 	margin: 0 0 -1px 0;
