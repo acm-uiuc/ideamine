@@ -12,6 +12,8 @@ ideas = { 'queryset' : Idea.objects.all() }
 urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
 
+    (r'^tags/suggest', 'main.views.tag_suggest', {}, 'tag_suggest'),
+
     (r'^users/(?P<object_id>\d+)', list_detail.object_detail, users, 'user_detail'),
     (r'^users/self', 'main.views.redirect_to_user', {}, 'user_detail_self'),
     (r'^users/create', 'main.views.user_create', {}, 'user_create'),

@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core import serializers
 from django.db.models.signals import post_save
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -91,3 +92,11 @@ def idea_leave(request, object_id, *args, **kwargs):
         return HttpResponseRedirect(redirect_to)
     except ObjectDoesNotExist:
         return HttpResponse("You aren't a member of this project")
+
+def tag_suggest(request, **kwargs):
+    json = serializers.get_serializer("json")()
+    response = HttpResponse(mimetype="text/json")
+    search = request.GET['s']
+    json.serialize(Tag.objects.filter(name__istartswith=search),
+                    fields=("name"), stream=response)
+    return response
