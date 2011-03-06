@@ -1,19 +1,24 @@
 #topbar {
 	width: 100%;
 	padding: 0;
-	position: relative;
-	top: 0;
-	text-align: right;
 	background-image:url('gradient.jpg');
 	background-repeat:repeat-x;
 }
+
 body {
 	min-width:800px;
 	margin: 0;
 }
+
+#navigation {
+	margin: 0 1em;
+	text-align: left;
+}
+
 #user {
-	position: relative;
-	right: 1em;
+	position: absolute;
+	right: 0;
+	margin: 0 1em;
 }
 
 #container {

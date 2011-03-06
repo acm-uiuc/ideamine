@@ -6,8 +6,12 @@
   </head>
   <body>
     <div id="topbar">
-      <span id="user">
+	  <span id="navigation">
         <a href="{% url main.views.index %}">Home</a>
+        <a href="{% url idea_list %}">Ideas</a>
+        <a href="{% url user_list %}">Users</a>
+      </span>
+      <span id="user">
         {% if user.is_authenticated %}
         Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a> <a href="{% url logout %}">Logout</a>
         {% else %}
