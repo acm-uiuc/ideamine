@@ -46,7 +46,7 @@ class Idea(models.Model):
         return relation.save()
 
     def remove_member(self, user):
-        joineduser = self.joineduser(user.get_picture())
+        joineduser = self.joineduser(user)
         return joineduser.delete()
 
     def add_tags(self, tags_string):
