@@ -4,13 +4,16 @@
 <ul class="idealist">
   {% for idea in object_list %}
   <li>
-	<div id="ideablock">
-      <div id="members">{{ idea.members.all.count }}</div>
-      <div id="titleBlock">{{ idea.short_name|title }}</div>
-	  <div id="progBar"></div>
-	  <div id="tagBlock">
+	<div class="ideablock">
+      <div class="members">{{ idea.members.all.count }}</div>
+	  <div class="bar">
+		<div class="titleBlock">{{ idea.short_name|title }}</div>
+		<div class="progBar">Progress: </div>
+	  </div>
+	  <div class="tagBlock">Tags:
 		{{ idea.tags.all|unordered_list }}
 	  </div>
+	  <div class="clear"></div>
 	</div>
   </li>
   {% endfor %}

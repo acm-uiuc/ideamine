@@ -39,26 +39,34 @@ body {
 	margin: 0 1em;
 }
 
-#ideablock{
+.ideablock{
 	padding: 1em;
 	margin: 0 0 -1px 0;
 	border: solid 1px;
 }
 
-#members{
-	margin: 
+.ideablock .members{
+	float: left;
+	font-weight: bold;
+	font-size: 2em;
+}
+
+.ideablock .bar {
+	float: left;
+	margin: 0 1em;
+	width: 80%;
+}
+
+.titleBlock{
+	border: 1px;
+}
+
+.progBar{
+	width: 100%;
 	border: solid 1px;
 }
 
-#titleBlock{
-	border: 1px;
-}
-
-#progBar{
-	border: 1px;
-}
-
-#tagBlock{
+.ideablock .tagBlock{
 	border: 1px;
 }
 
@@ -72,3 +80,6 @@ body {
 	margin: 0 2em;
 }
 
+.clear {
+	clear: both;
+}
