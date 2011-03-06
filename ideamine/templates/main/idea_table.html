@@ -1,21 +1,11 @@
 {% load comments %}
 
 {% if object_list %}
-<table>
-  <tr>
-	<th>pk</th>
-	<th>owner</th>
-	<th>short_name</th>
-	<th>desc</th>
-	<th>tags</th>
-	<th>created_at</th>
-	<th>updated_at</th>
-	<th>members</th>
-	<th>comments</th>
-  </tr>
-  {% for idea in object_list %}
-  <tr>
-	<td><a href="{% url idea_detail idea.pk %}">{{ idea.pk }}</a></td>
+<ul class="idealist">
+{% for idea in object_list %}
+<li>
+  <div id="ideablock">
+	{% comment %}<td><a href="{% url idea_detail idea.pk %}">{{ idea.pk }}</a></td>
 	<td><a href="{% url user_detail idea.owner.pk %}">{{ idea.owner }}</a></td>
 	<td><a href="{% url idea_detail idea.pk %}">{{ idea.short_name }}</a></td>
 	<td>{{ idea.desc }}</td>
@@ -28,9 +18,11 @@
 	  <a href="{% url user_detail user.pk %}">{{ user }}</a> 
 	{% endfor %}</td>
 	<td>{% get_comment_count for idea as comment_count %}{{ comment_count }}</td>
-  </tr>
+  </tr>{% endcomment %}
+  </div>
+</li>
   {% endfor %}
-</table>
+</ul>
 {% else %}
 <p>{{ emptymessage|default:'No Ideas' }}</p>
 {% endif %}
