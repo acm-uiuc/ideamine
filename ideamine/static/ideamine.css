@@ -67,17 +67,23 @@ body {
 	width: 80%;
 }
 
-.titleBlock{
+.titleBlock {
 	border: 1px;
 }
 
-.progBar{
+.progBar {
 	width: 100%;
 	border: solid 1px;
 }
 
-.ideablock .tagBlock{
+.ideablock .tagBlock {
+	float: left;
 	border: 1px;
+}
+
+.tagBlock ul {
+	list-style-type: none;
+	padding: 0;
 }
 
 #footer {

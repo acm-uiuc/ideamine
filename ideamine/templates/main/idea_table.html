@@ -12,7 +12,9 @@
           <div class="progBar">Progress: </div>
         </div>
         <div class="tagBlock">Tags:
-          {{ idea.tags.all|unordered_list }}
+		  <ul>
+			{{ idea.tags.all|unordered_list }}
+		  </ul>
         </div>
         <div class="clear"></div>
       </div>
