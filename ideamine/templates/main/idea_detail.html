@@ -8,7 +8,7 @@
 <table>
   <tr>
 	<th>Owner:</th>
-	<td>{{ object.owner }}</td>
+	<td><a href="{% url user_detail object.owner.user.id %}">{{ object.owner }}</a></td>
   </tr>
   <tr>
 	<th>Created:</th>
