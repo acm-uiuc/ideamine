@@ -2,33 +2,17 @@
 
 {% if object_list %}
 <ul class="idealist">
-{% for idea in object_list %}
-<li>
-  <div id="ideablock">
-    <div id="members">
-    <div id="titleBlock">
-	<div id="progBar">
-	<div id="tagBlock">
-	{% comment %}<td><a href="{% url idea_detail idea.pk %}">{{ idea.pk }}</a></td>
-	<td><a href="{% url user_detail idea.owner.pk %}">{{ idea.owner }}</a></td>
-	<td><a href="{% url idea_detail idea.pk %}">{{ idea.short_name }}</a></td>
-	<td>{{ idea.desc }}</td>
-	<td>{% for tag in idea.tags.all %}
-	  <a href="{% url tag_detail tag.id %}">{{ tag }}</a> 
-	{% endfor %}</td>
-	<td>{{ idea.created_at }}</td>
-	<td>{{ idea.updated_at }}</td>
-	<td>{% for user in idea.members.all %}
-	  <a href="{% url user_detail user.pk %}">{{ user }}</a> 
-	{% endfor %}</td>
-	<td>{% get_comment_count for idea as comment_count %}{{ comment_count }}</td>
-  </tr>{% endcomment %}
-    </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</li>
+  {% for idea in object_list %}
+  <li>
+	<div id="ideablock">
+      <div id="members">{{ idea.members.all.count }}</div>
+      <div id="titleBlock">{{ idea.short_name|title }}</div>
+	  <div id="progBar"></div>
+	  <div id="tagBlock">
+		{{ idea.tags.all|unordered_list }}
+	  </div>
+	</div>
+  </li>
   {% endfor %}
 </ul>
 {% else %}
