@@ -58,10 +58,15 @@ def redirect_to_user(request, *args, **kwargs):
 @login_required
 def idea_create(request, *args, **kwargs):
     if request.method == 'POST':
+        tags = request.POST["tags"]
+        idea_POST = request.POST.copy()
+        del(idea_POST["tags"])
+
         idea = Idea(owner=request.user.get_profile())
-        idea_form = IdeaForm(request.POST, instance=idea)
+        idea_form = IdeaForm(idea_POST, instance=idea)
         if idea_form.is_valid():
             idea_form.save()
+            idea.add_tags(tags)
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:

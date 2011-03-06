@@ -49,6 +49,11 @@ class Idea(models.Model):
         joineduser = self.joineduser(user.get_picture())
         return joineduser.delete()
 
+    def add_tags(self, tags_string):
+        tag_list = tags_string.split()
+        for tag in tag_list:
+            self.tags.create(name=tag)
+
     def __unicode__(self):
         return self.short_name + ': ' + self.owner.username
 
