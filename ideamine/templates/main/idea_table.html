@@ -5,6 +5,10 @@
 {% for idea in object_list %}
 <li>
   <div id="ideablock">
+    <div id="members">
+    <div id="titleBlock">
+	<div id="progBar">
+	<div id="tagBlock">
 	{% comment %}<td><a href="{% url idea_detail idea.pk %}">{{ idea.pk }}</a></td>
 	<td><a href="{% url user_detail idea.owner.pk %}">{{ idea.owner }}</a></td>
 	<td><a href="{% url idea_detail idea.pk %}">{{ idea.short_name }}</a></td>
@@ -19,6 +23,10 @@
 	{% endfor %}</td>
 	<td>{% get_comment_count for idea as comment_count %}{{ comment_count }}</td>
   </tr>{% endcomment %}
+    </div>
+    </div>
+    </div>
+    </div>
   </div>
 </li>
   {% endfor %}

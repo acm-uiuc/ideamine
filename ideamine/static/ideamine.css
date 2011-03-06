@@ -44,6 +44,24 @@ body {
 	margin: 0 0 -1px 0;
 	border: solid 1px;
 }
+
+#members{
+	margin: 
+	border: solid 1px;
+}
+
+#titleBlock{
+	border: 1px;
+}
+
+#progBar{
+	border: 1px;
+}
+
+#tagBlock{
+	border: 1px;
+}
+
 #footer {
 	clear: both;
 }
