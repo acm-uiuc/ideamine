@@ -38,6 +38,9 @@ class Idea(models.Model):
     def unconfirmed_members(self):
         return self.members.filter(joineduser__confirmed=False)
 
+    def confirmed_members(self):
+        return self.members.filter(joineduser__confirmed=True)
+
     def joineduser(self, user):
         return JoinedUser.objects.get(user=user.get_profile(), idea=self)
 
@@ -55,7 +58,7 @@ class Idea(models.Model):
             self.tags.create(name=tag)
 
     def __unicode__(self):
-        return self.short_name + ': ' + self.owner.username
+        return '%s: %s' % (self.short_name, self.owner)
 
     @models.permalink
     def get_absolute_url(self):
@@ -64,4 +67,4 @@ class Idea(models.Model):
 class JoinedUser(models.Model):
     user = models.ForeignKey(UserProfile)
     idea = models.ForeignKey(Idea)
-    confirmed = models.BooleanField(default=False, editable=False)
+    confirmed = models.BooleanField(default=False)
