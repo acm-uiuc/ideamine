@@ -20,7 +20,7 @@
 {% endwith %}
 <p><a href="{% url idea_create %}">Create Idea</a></p>
 <h3>Joined Ideas</h3>
-{% with object.get_profle.joined_ideas.all as object_list %}
+{% with object.get_profile.joined_ideas.all as object_list %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
 {% endblock %}
