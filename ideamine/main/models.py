@@ -14,6 +14,9 @@ class UserProfile(models.Model):
     def username(self):
         return self.user.username
 
+    def can_update_user(self, user):
+        return self.user.has_perms('main.change_user') or user.pk == self.user.pk
+
     def __unicode__(self):
         return self.username()
 

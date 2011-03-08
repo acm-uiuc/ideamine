@@ -48,9 +48,32 @@ def user_profile_create(sender, **kwargs):
         profile.save();
 
 @login_required
+def user_detail(request, object_id, **kwargs):
+    update_user = get_object_or_404(User, pk=object_id)
+    request_profile = request.user.get_profile()
+    if request.method == 'POST':
+        if request_profile.can_update_user(update_user):
+            user_form = UserUpdateForm(request.POST, instance=update_user)
+            kwargs['form'] = user_form
+            if user_form.is_valid():
+                user_form.save()
+                redirect_to = update_user.get_profile().get_absolute_url()
+                return HttpResponseRedirect(redirect_to)
+        else:
+            return HttpResponseForbidden()
+    else:
+        if request_profile.can_update_user(update_user):
+            user_form = UserUpdateForm(instance=update_user)
+            kwargs['form'] = user_form
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(object=update_user, **kwargs))
+    return render_to_response('auth/user_detail.html', c)
+
+@login_required
 def user_update(request, object_id, **kwargs):
     if object_id != '%d' % request.user.pk:
-        return HttpResponseForbidden(request.user.pk)
+        return HttpResponseForbidden()
     update_user = request.user
     if request.method == 'POST':
         user_update_form = UserUpdateForm(request.POST, instance=update_user)
