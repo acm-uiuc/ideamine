@@ -4,7 +4,8 @@
 {% block title %}{{ object.short_name|title }}{% endblock %}
 
 {% block content %}
-<h2>{{ object.short_name|title }}</h2>
+<h1>{{ object.short_name|title }}</h1>
+{% comment %}
 <table>
   <tr>
 	<th>Owner:</th>
@@ -19,8 +20,15 @@
 	<td>{{ object.members.all.count }}</td>
   </tr>
 </table>
+{% endcomment %}
+<div class="descrpitonblock">
+  <div class="description"><p>Description</p>
+  </div>
+  <div class="memberlist"><p>MemberList</p>
+  </div>
+  <div class="clear"></div>
+</div>
 {% if user.get_profile == object.owner %}
-
 {% with object.unconfirmed_members as object_list %}
 {% with True as edit %}
 {% include 'auth/user_table.html' %}
