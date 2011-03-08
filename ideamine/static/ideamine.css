@@ -79,9 +79,6 @@ body {
 .ideablock .tagBlock {
 	float: left;
 	border: 1px;
-}
-
-.tagBlock ul {
 	list-style-type: none;
 	padding: 0;
 }
