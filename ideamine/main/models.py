@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('user_detail', (), { 'object_id' : self.pk })
+        return ('user_detail', (), { 'object_id' : self.user.pk })
 
 class Idea(models.Model):
     owner = models.ForeignKey(UserProfile, related_name='owned_ideas')
