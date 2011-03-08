@@ -2,9 +2,11 @@
 
 {% get_comment_form for object as form %}
 <form action="{% comment_form_target %}" method="POST">
-  {{ form }}
-  <tr>
-    <td></td>
-    <td><input type="submit" name="preview" class="submit-post" value="Preview"></td>
-  </tr>
+	<!--<p>Name: {{ form.name }}</p>
+	<p>Email: {{ form.email }}</p>
+	<p>URL: {{ form.url }}</p>
+	<p>Comment: {{ form.comment }}</p>-->
+	{{ form.as_p }}
+	{% csrf_token %}
+	<input type="submit" name="preview" class="submit-post" value="Post comment"></td>
 </form>
