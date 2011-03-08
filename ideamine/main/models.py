@@ -50,7 +50,8 @@ class Idea(models.Model):
 
     def is_confirmed(self, user):
         try:
-            return self.confirmed_members().get(pk=user.pk).exists()
+            self.confirmed_members().get(pk=user.get_profile().pk)
+            return True
         except ObjectDoesNotExist:
             return False
 
