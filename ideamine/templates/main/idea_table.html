@@ -11,11 +11,9 @@
           <div class="titleBlock">{{ idea.short_name|title }}</div>
           <div class="progBar">Progress: </div>
         </div>
-        <div class="tagBlock">Tags:
-		  <ul>
-			{{ idea.tags.all|unordered_list }}
-		  </ul>
-        </div>
+		<ul class="tagBlock">
+		  {{ idea.tags.all|unordered_list }}
+		</ul>
         <div class="clear"></div>
       </div>
     </a>
