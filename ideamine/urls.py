@@ -1,8 +1,9 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
-from django.views.generic import list_detail
+from django.views.generic import list_detail, create_update
 from django.conf import settings
 from main.models import Idea, User
+from main.forms import *
 
 admin.autodiscover()
 
@@ -14,6 +15,7 @@ urlpatterns = patterns('',
 
     (r'^tags/suggest', 'main.views.tag_suggest', {}, 'tag_suggest'),
 
+    (r'^users/(?P<object_id>\d+)/update', 'main.views.user_update', {}, 'user_update'),
     (r'^users/(?P<object_id>\d+)', list_detail.object_detail, users, 'user_detail'),
     (r'^users/self', 'main.views.redirect_to_user', {}, 'user_detail_self'),
     (r'^users/create', 'main.views.user_create', {}, 'user_create'),
@@ -29,7 +31,7 @@ urlpatterns = patterns('',
     (r'^comments', include('django.contrib.comments.urls')),
 
     (r'^login', 'django.contrib.auth.views.login', {}, 'login'),
-    (r'^logout', 'django.contrib.auth.views.logout', 
+    (r'^logout', 'django.contrib.auth.views.logout',
      { 'next_page' : '/'}, 'logout'),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

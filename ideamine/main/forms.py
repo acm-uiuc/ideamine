@@ -12,3 +12,8 @@ class IdeaForm(ModelForm):
 class TagForm(ModelForm):
     class Meta:
         model = Tag
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')

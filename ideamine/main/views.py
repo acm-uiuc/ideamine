@@ -6,7 +6,7 @@ from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core import serializers
 from django.db.models.signals import post_save
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.views.generic import list_detail
@@ -33,7 +33,7 @@ def user_create(request, *args, **kwargs):
             user_form.save()
             new_user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, new_user)
-            redirect_to = '/users/self'
+            redirect_to = new_user.get_profile().get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
         user_form = UserCreationForm()
@@ -47,12 +47,29 @@ def user_profile_create(sender, **kwargs):
         profile = UserProfile(user=kwargs['instance']);
         profile.save();
 
+@login_required
+def user_update(request, object_id, **kwargs):
+    if object_id != '%d' % request.user.pk:
+        return HttpResponseForbidden(request.user.pk)
+    update_user = request.user
+    if request.method == 'POST':
+        user_update_form = UserUpdateForm(request.POST, instance=update_user)
+        if user_update_form.is_valid():
+            user_update_form.save()
+            redirect_to = update_user.get_profile().get_absolute_url()
+            return HttpResponseRedirect(redirect_to)
+    else:
+        user_update_form = UserUpdateForm(instance=update_user)
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(form=user_update_form, **kwargs))
+    return render_to_response('auth/user_form.html', c)
+
 post_save.connect(user_profile_create, sender=User)
 
-# This needs to be reworked, maybe with user profiles
 @login_required
 def redirect_to_user(request, *args, **kwargs):
-    redirect_to = '/users/%d' % (request.user.pk)
+    redirect_to = request.user.get_profile().get_absolute_url()
     return HttpResponseRedirect(redirect_to)
 
 @login_required

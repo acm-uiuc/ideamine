@@ -17,6 +17,10 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.username()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('user_detail', (), { 'object_id' : self.pk })
+
 class Idea(models.Model):
     owner = models.ForeignKey(UserProfile, related_name='owned_ideas')
     short_name = models.CharField(max_length=50, unique=True)
