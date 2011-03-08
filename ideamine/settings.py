@@ -110,5 +110,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.comments',
-    'main'
+    'main',
+    'idea_comments'
 )
+
+COMMENTS_APP = 'idea_comments'

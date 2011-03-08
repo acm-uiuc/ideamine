@@ -1,12 +1,17 @@
-{% load comments %}
-
-{% get_comment_form for object as form %}
-<form action="{% comment_form_target %}" method="POST">
-	<!--<p>Name: {{ form.name }}</p>
-	<p>Email: {{ form.email }}</p>
-	<p>URL: {{ form.url }}</p>
-	<p>Comment: {{ form.comment }}</p>-->
-	{{ form.as_p }}
-	{% csrf_token %}
-	<input type="submit" name="preview" class="submit-post" value="Post comment"></td>
+{% load comments i18n %}
+<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+  <div><input type="hidden" name="next" value="{% url idea_detail object.pk %}" /></div>
+  {% for field in form %}
+    {% if field.is_hidden %}
+      <div>{{ field }}</div>
+    {% else %}
+      {% ifequal field.name "comment" %}
+      <p>Comment {{ field }}</p>
+      {% endifequal %}
+    {% endif %}
+  {% endfor %}
+  <p class="submit">
+    <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
+    <!--<input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />-->
+  </p>
 </form>
