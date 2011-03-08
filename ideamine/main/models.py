@@ -17,6 +17,9 @@ class UserProfile(models.Model):
     def can_update_user(self, user):
         return self.user.has_perms('main.change_user') or user.pk == self.user.pk
 
+    def can_update_idea(self, idea):
+        return self.user.has_perms('main.change_idea') or idea.can_edit(self.user)
+
     def __unicode__(self):
         return self.username()
 
@@ -41,6 +44,18 @@ class Idea(models.Model):
             joineduser.save()
         except ObjectDoesNotExist:
             joineduser = JoinedUser(user=user.get_profile(), idea=self, confirmed=True)
+
+    def can_edit(self, user):
+        return self.is_confirmed(user) or self.is_owner(user)
+
+    def is_confirmed(self, user):
+        try:
+            return self.confirmed_members().get(pk=user.pk).exists()
+        except ObjectDoesNotExist:
+            return False
+
+    def is_owner(self, user):
+        return self.owner.pk == user.pk
 
     def unconfirmed_members(self):
         return self.members.filter(joineduser__confirmed=False)

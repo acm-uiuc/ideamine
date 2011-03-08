@@ -111,7 +111,48 @@ def idea_create(request, *args, **kwargs):
     return render_to_response('main/idea_form.html', c)
 
 @login_required
-def idea_join(request, object_id, *args, **kwargs): 
+def idea_detail(request, object_id, **kwargs):
+    update_idea = get_object_or_404(Idea, pk=object_id)
+    request_profile = request.user.get_profile()
+    if request.method == 'POST':
+        if request_profile.can_update_idea(update_idea):
+            idea_form = IdeaUpdateForm(request.POST, instance=update_idea)
+            kwargs['form'] = idea_form
+            if idea_form.is_valid():
+                idea_form.save()
+                redirect_to = update_idea.get_absolute_url()
+                return HttpResponseRedirect(redirect_to)
+        else:
+            return HttpResponseForbidden()
+    else:
+        if request_profile.can_update_idea(update_idea):
+            idea_form = IdeaUpdateForm(instance=update_idea)
+            kwargs['form'] = idea_form
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(object=update_idea, **kwargs))
+    return render_to_response('main/idea_detail.html', c)
+
+@login_required
+def idea_update(request, object_id, **kwargs):
+    update_idea = get_object_or_404(Idea, pk=object_id)
+    if not request.user.get_profile().can_update_idea(update_idea):
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        idea_update_form = IdeaUpdateForm(request.POST, instance=update_idea)
+        if idea_update_form.is_valid():
+            idea_update_form.save()
+            redirect_to = update_idea.get_absolute_url()
+            return HttpResponseRedirect(redirect_to)
+    else:
+        idea_update_form = IdeaUpdateForm(instance=update_idea)
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(form=idea_update_form, **kwargs))
+    return render_to_response('main/idea_form.html', c)
+
+@login_required
+def idea_join(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         try:

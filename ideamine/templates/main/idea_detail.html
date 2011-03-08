@@ -4,6 +4,15 @@
 {% block title %}{{ object.short_name|title }}{% endblock %}
 
 {% block content %}
+{% if form %}
+<form action="{% url idea_update object.pk %}" method="post">
+  <table>
+	{{ form.as_table }}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Update Idea">
+</form>
+{% else %}
 <h2>{{ object.short_name|title }}</h2>
 <table>
   <tr>
@@ -15,10 +24,15 @@
 	<td>{{ object.created_at }}</td>
   </tr>
   <tr>
+	<th>Tags:</th>
+	<td><ul>{{ object.tags.all|unordered_list }}</ul></td>
+  </tr>
+  <tr>
 	<th>Current Members:</th>
 	<td>{{ object.members.all.count }}</td>
   </tr>
 </table>
+{% endif %}
 {% if user.get_profile == object.owner %}
 
 {% with object.unconfirmed_members as object_list %}
