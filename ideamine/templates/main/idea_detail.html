@@ -29,9 +29,15 @@
 {% else %}
 
 {% if not user.get_profile in object.members.all %}
-<p><a href="{% url user_join_idea object.pk %}">Join Idea</a></p>
+<form method = "post" action = "{% url user_join_idea object.pk %}">
+  {% csrf_token %}
+  <input type = "submit" value = "Join Project" />
+</form>
 {% else %}
-<p><a href="{% url user_leave_idea object.pk %}">Leave Idea</a></p>
+<form method = "post" action = "{% url user_leave_idea object.pk %}">
+  {% csrf_token %}
+  <input type = "submit" value = "Leave Project" />
+</form>
 {% endif %}
 
 {% endif %}

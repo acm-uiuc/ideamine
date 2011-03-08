@@ -94,26 +94,32 @@ def idea_create(request, *args, **kwargs):
     return render_to_response('main/idea_form.html', c)
 
 @login_required
-def idea_join(request, object_id, *args, **kwargs):
-    idea = get_object_or_404(Idea, pk=object_id)
-    try:
-        idea.members.get(user=request.user.pk)
-        return HttpResponse("You're already a member")
-    except ObjectDoesNotExist:
-        idea.add_member(request.user)
-        redirect_to = idea.get_absolute_url()
-        return HttpResponseRedirect(redirect_to)
+def idea_join(request, object_id, *args, **kwargs): 
+    if request.method == "POST":
+        idea = get_object_or_404(Idea, pk=object_id)
+        try:
+            idea.members.get(user=request.user.pk)
+            return HttpResponse("You're already a member")
+        except ObjectDoesNotExist:
+            idea.add_member(request.user)
+            redirect_to = idea.get_absolute_url()
+            return HttpResponseRedirect(redirect_to)
+    else:
+        return HttpResponse("Method incorrectly called with get")
 
 @login_required
 def idea_leave(request, object_id, *args, **kwargs):
-    idea = get_object_or_404(Idea, pk=object_id)
-    try:
-        idea.members.get(user=request.user.pk)
-        idea.remove_member(request.user)
-        redirect_to = idea.get_absolute_url()
-        return HttpResponseRedirect(redirect_to)
-    except ObjectDoesNotExist:
-        return HttpResponse("You aren't a member of this project")
+    if request.method == "POST":
+        idea = get_object_or_404(Idea, pk=object_id)
+        try:
+            idea.members.get(user=request.user.pk)
+            idea.remove_member(request.user)
+            redirect_to = idea.get_absolute_url()
+            return HttpResponseRedirect(redirect_to)
+        except ObjectDoesNotExist:
+            return HttpResponse("You aren't a member of this project")
+    else:
+        return HttpResponse("Method incorrectly called with get")
 
 def tag_suggest(request, **kwargs):
     json = serializers.get_serializer("json")()
