@@ -10,24 +10,6 @@ body {
 	margin: 0;
 }
 
-h1 {
-	text-align: center;
-}
-
-.tagblock {
-
-}
-
-.descriptionblock {
-	padding: 1em;
-}
-
-.description {
-	position:relative;
-	float:left;
-	width:75%;
-}
-
 #navigation {
 	margin: 0 1em;
 	text-align: left;
