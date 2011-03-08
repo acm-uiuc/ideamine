@@ -5,7 +5,6 @@ from django.contrib.auth import login, authenticate
 from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core import serializers
-from django.db.models.signals import post_save
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -13,6 +12,8 @@ from django.views.generic import list_detail
 
 from main.forms import *
 from main.models import *
+
+import main.signals
 
 def index(request):
     c = RequestContext(request, {})
@@ -41,11 +42,6 @@ def user_create(request, *args, **kwargs):
     kwargs.update(csrf(request))
     c = RequestContext(request, dict(form=user_form, **kwargs))
     return render_to_response('auth/user_form.html', c)
-
-def user_profile_create(sender, **kwargs):
-    if kwargs['created']:
-        profile = UserProfile(user=kwargs['instance']);
-        profile.save();
 
 @login_required
 def user_detail(request, object_id, **kwargs):
@@ -87,8 +83,6 @@ def user_update(request, object_id, **kwargs):
     kwargs.update(csrf(request))
     c = RequestContext(request, dict(form=user_update_form, **kwargs))
     return render_to_response('auth/user_form.html', c)
-
-post_save.connect(user_profile_create, sender=User)
 
 @login_required
 def redirect_to_user(request, *args, **kwargs):
