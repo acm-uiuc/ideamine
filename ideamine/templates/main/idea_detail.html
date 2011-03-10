@@ -64,7 +64,7 @@
 	<td>{{ user.last_login }}</td>
 	<td>{{ user.date_joined }}</td>
 	<td>
-	<form method="post" action="{% url idea_confirm_member object.pk user.pk %}">
+	<form method="post" action="{% url idea_confirm_member object.pk user.user.pk %}">
 	  {% csrf_token %}
 	  <input type="submit" value="Confirm Member" />
 	</form>
