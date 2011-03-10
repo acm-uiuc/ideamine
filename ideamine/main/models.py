@@ -55,6 +55,13 @@ class Idea(models.Model):
         except ObjectDoesNotExist:
             return False
 
+    def is_member(self, user):
+        try:
+            self.members.get(user=user.get_profile().pk)
+            return True
+        except ObjectDoesNotExist:
+            return False
+
     def is_owner(self, user):
         return self.owner.user.pk == user.pk
 

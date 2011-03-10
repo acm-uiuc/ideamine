@@ -141,13 +141,12 @@ def idea_update(request, object_id, **kwargs):
 def idea_join(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
-        try:
-            idea.members.get(user=request.user.pk)
+        if idea.is_member(request.user):
             return HttpResponse("You're already a member")
-        except ObjectDoesNotExist:
-            idea.add_member(request.user)
-            redirect_to = idea.get_absolute_url()
-            return HttpResponseRedirect(redirect_to)
+
+        idea.add_member(request.user)
+        redirect_to = idea.get_absolute_url()
+        return HttpResponseRedirect(redirect_to)
     else:
         return HttpResponse("Method incorrectly called with get")
 
@@ -155,16 +154,14 @@ def idea_join(request, object_id, *args, **kwargs):
 def idea_leave(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
-        try:
-            idea.members.get(user=request.user.pk)
+        if idea.is_member(request.user):
             idea.remove_member(request.user)
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
-        except ObjectDoesNotExist:
-            return HttpResponse("You aren't a member of this project")
+
+        return HttpResponse("You're not a member")
     else:
         return HttpResponse("Method incorrectly called with get")
-
 
 @login_required
 def confirm_member(request, object_id, member_id, *args, **kwargs):
