@@ -182,17 +182,18 @@ def idea_leave(request, object_id, *args, **kwargs):
 
 @login_required
 def confirm_member(request, object_id, member_id, *args, **kwargs):
-    idea = get_object_or_404(Idea, pk=object_id)
-    if idea.is_owner(request.user):
-        try:
-            prof = idea.members.get(user=member_id)
-            idea.confirm_member(prof.user)
-            redirect_to = idea.get_absolute_url()
-            return HttpResponseRedirect(redirect_to)
-        except ObjectDoesNotExist:
-            return HttpResponse("Given user is not a member of this project")
+    if request.method == "POST":
+        idea = get_object_or_404(Idea, pk=object_id)
+        if idea.is_owner(request.user):
+            try:
+                prof = idea.members.get(user=member_id)
+                idea.confirm_member(prof.user)
+                redirect_to = idea.get_absolute_url()
+                return HttpResponseRedirect(redirect_to)
+            except ObjectDoesNotExist:
+                return HttpResponse("Given user is not a member of this project")
     else:
-        return HttpResponse("You are not the owner of this idea.")
+        return HttpResponse("Method incorrectly called with get")
 
 def tag_suggest(request, **kwargs):
     json = serializers.get_serializer("json")()

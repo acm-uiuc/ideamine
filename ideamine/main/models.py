@@ -56,7 +56,7 @@ class Idea(models.Model):
             return False
 
     def is_owner(self, user):
-        return self.owner.user.pk == user.pk
+        return self.owner.user.pk == user
 
     def unconfirmed_members(self):
         return self.members.filter(joineduser__confirmed=False)
