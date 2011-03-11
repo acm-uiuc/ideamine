@@ -73,7 +73,7 @@ def redirect_to_user(request, *args, **kwargs):
 def idea_create(request, *args, **kwargs):
     if request.method == 'POST':
         idea = Idea(owner=request.user.get_profile())
-        idea_form = generate_idea_form(idea, request.POST)
+        idea_form = generate_idea_form(IdeaForm, idea, request.POST)
         if idea_form.is_valid():
             idea_form.save()
             idea.change_tags(idea_form.cleaned_data['tags_field'])
@@ -94,7 +94,7 @@ def idea_detail(request, object_id, **kwargs):
         kwargs['can_delete'] = True
     if request.method == 'POST':
         if request_profile.can_update_idea(update_idea):
-            idea_form = generate_idea_form(update_idea, request.POST)
+            idea_form = generate_idea_form(IdeaUpdateForm, update_idea, request.POST)
             kwargs['form'] = idea_form
             if idea_form.is_valid():
                 idea_form.save()
@@ -104,7 +104,7 @@ def idea_detail(request, object_id, **kwargs):
             return HttpResponseForbidden()
     else:
         if request_profile.can_update_idea(update_idea):
-            idea_form = generate_idea_form(update_idea)
+            idea_form = generate_idea_form(IdeaUpdateForm, update_idea)
             kwargs['form'] = idea_form
 
     kwargs.update(csrf(request))
@@ -117,7 +117,7 @@ def idea_update(request, object_id, **kwargs):
     if not request.user.get_profile().can_update_idea(update_idea):
         return HttpResponseForbidden()
     if request.method == 'POST':
-        idea_update_form = generate_idea_form(update_idea, request.POST)
+        idea_update_form = generate_idea_form(IdeaUpdateForm, update_idea, request.POST)
         if idea_update_form.is_valid():
             idea_update_form.save()
             update_idea.change_tags(idea_update_form.cleaned_data['tags_field'])
