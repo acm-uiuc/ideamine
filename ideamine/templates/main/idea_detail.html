@@ -5,7 +5,6 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/css/ideaEdit.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/textboxlist/TextboxList.css" />
 <link rel="stylesheet" type="text/css" href="/static/css/textboxlist/TextboxList.Autocomplete.css" />
 
 <script type="text/javascript" src="/static/js/textboxlist/GrowingInput.js"></script>
@@ -38,9 +37,9 @@
 	<tr>
 		<th>Tags:</th>
 		<td>
-			<ul class="tagBlock">
+			<ul class="textboxlist-bits textboxlist tagBlock">
 			{% for tag in object.tags.all %}
-			<li><a href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
+				<li class="textboxlist-bit textboxlist-bit-box"><a class="tag" href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
 			{% endfor %}
 			</ul>
 	</tr>

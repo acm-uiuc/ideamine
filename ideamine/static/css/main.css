@@ -78,6 +78,16 @@ div#contentContainer {
 	margin: 0 50px;
 }
 
+/* for non-editable tags */
+a.tag {
+	text-decoration: none;
+	color: #000;
+}
+a.tag:active {
+	color: #fff;
+}
+ul.tagBlock {border: none;}
+
 /* Footer */
 footer#siteFooter {
 	margin-top: 50px;

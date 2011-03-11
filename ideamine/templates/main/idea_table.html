@@ -2,25 +2,23 @@
 
 {% if object_list %}
 <ul class="idealist">
-  {% for idea in object_list %}
-  <li>
-	<a href="{% url idea_detail idea.pk %}">
-	  <div class="ideablock">
-        <div class="members">{{ idea.members.all.count }}</div>
-        <div class="bar">
-          <div class="titleBlock">{{ idea.short_name|title }}</div>
-          <div class="progBar">Progress: </div>
-        </div>
-		<ul class="tagBlock">
-		  {% for tag in idea.tags.all %}
-		  <li><a href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
-		  {% endfor %}
-		</ul>
-        <div class="clear"></div>
-      </div>
-    </a>
-  </li>
-  {% endfor %}
+	{% for idea in object_list %}
+	<li>
+		<div class="ideablock">
+			<div class="members">{{ idea.members.all.count }}</div>
+			<div class="bar">
+				<div class="titleBlock"><a href="{% url idea_detail idea.pk %}">{{ idea.short_name|title }}</a></div>
+				<div class="progBar">Progress: </div>
+			</div>
+			<ul class="textboxlist-bits textboxlist tagBlock">
+			{% for tag in idea.tags.all %}
+				<li class="textboxlist-bit textboxlist-bit-box"><a class="tag" href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
+			{% endfor %}
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</li>
+	{% endfor %}
 </ul>
 {% else %}
 <p>{{ emptymessage|default:'No Ideas' }}</p>
