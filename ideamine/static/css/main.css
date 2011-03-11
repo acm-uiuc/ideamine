@@ -1,3 +1,16 @@
+/* Useful tools:
+ *	- Gradient Maker: http://tools.dynamicdrive.com/gradient/
+ *	- Free Icons: http://icons.mysitemyway.com/
+ */
+ 
+/* YOU CAN CHANGE:
+ *	- the font (possibly font-size and padding-top to adjust for different font sizes)
+ *		- this includes color and text-decoration
+ *	- background images (replace with a 48 by 48 px icon)
+ * DON'T CHANGE:
+ *	- positioning stuff (height, width, float) unless you know what you're doing.
+ */
+ 
 /* HTML5 fix for older browsers */
 header, section, nav, footer {display: block;}
 
@@ -6,12 +19,59 @@ div#siteContainer {
 	width: 700px;
 }
 
+/* Header */
+header#siteHeader {float: left; width: 100%;}
+header#siteHeader nav {width: 100%;}
+header#siteHeader h1 {margin-bottom: 0;}
+
 /* Nav */
-nav {}
-nav ul {list-style: none;}
-nav ul li {float: left; padding: 0 5px;}
+nav {float: left;}
+nav ul {
+	list-style: none;
+	padding: 0;
+}
+nav ul li {
+	float: left;
+	padding: 0 5px;
+}
 
+nav ul#mainNav {float: left;}
+nav ul#mainNav li {
+	font: 100% verdana,arial,sans-serif;
+	font-size: 16px;
+	background-repeat: no-repeat;
+	height: 48px;
+	width: 84px;
+}
+nav ul#mainNav li.home {background-image: url(/static/images/home-red.png);}
+nav ul#mainNav li.ideas {background-image: url(/static/images/ideas-light-on.png);}
+nav ul#mainNav li.users {background-image: url(/static/images/users-person.png);}
+nav ul#mainNav li a {
+	float: right;
+	padding-top: 16px;
+	text-decoration: none;
+	color: #A00000;
+}
+nav ul#mainNav li a:hover {text-decoration: underline;}
 
+nav ul#loginNav {float:right;}
+nav ul#loginNav li {
+	font: 100% verdana,arial,sans-serif;
+	font-size: 16px;
+	background-repeat: no-repeat;
+	height: 48px;
+	width: 64px;
+}
+nav ul#loginNav li a {
+	float: right;
+	padding-top: 16px;
+	text-decoration: none;
+	color: #A00000;
+}
+nav ul#loginNav li a:hover {text-decoration: underline;}
+
+/* Main Content */
+div#contentContainer {clear: both;}
 
 
 

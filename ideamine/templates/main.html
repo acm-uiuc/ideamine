@@ -3,7 +3,7 @@
 
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link href="/static/main.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"></script>
     {% block head %}{% endblock %}
 </head>
@@ -15,13 +15,13 @@
 <!--     		<button>Contact Us!</button> -->
     		<nav>
     			<ul id="mainNav">
-    				<li><a href="{% url main.views.index %}">Home</a></li>
-    				<li><a href="{% url idea_list %}">Ideas</a></li>
-    				<li><a href="{% url user_list %}">Users</a></li>
+    				<li class="home"><a href="{% url main.views.index %}">Home</a></li>
+    				<li class="ideas"><a href="{% url idea_list %}">Ideas</a></li>
+    				<li class="users"><a href="{% url user_list %}">Users</a></li>
     			</ul>
     			<ul id="loginNav">
     				{% if user.is_authenticated %}
-    					<li>Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a></li>
+    					<li><a href="{% url user_detail user.id %}">{{ user.username }}</a></li>
     					<li><a href="{% url logout %}">Logout</a></li>
     				{% else %}
     					<li><a href="{% url user_create %}">Register</a></li>

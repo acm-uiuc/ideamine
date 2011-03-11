@@ -18,11 +18,11 @@
 {% if form %}
 <form action="{% url idea_update object.pk %}" method="post">
 	<fieldset>
-		<legend>Edit Your Idea</legend>
+		<legend>Edit Your Idea!</legend>
 		{{ form.as_p }}
 	</fieldset>
 	{% csrf_token %}
-	<input type="submit" value="Update Idea">
+	<input type="submit" value="Update Idea" id="ideaSubmit">
 </form>
 {% else %}
 <h2>{{ object.short_name|title }}</h2>

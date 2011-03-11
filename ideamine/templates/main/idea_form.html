@@ -18,10 +18,11 @@
 <div>{{ errors }}</div>
 {% endif %}
 <form action="" method="post">
-  <table>
-	{{ form.as_table }}
-  </table>
-  {% csrf_token %}
-  <input type="submit" value="Create Idea">
+	<fieldset>
+		<legend>Add Your Idea!</legend>
+		{{ form.as_p }}
+	</fieldset>
+	{% csrf_token %}
+	<input type="submit" value="Create Idea" id="ideaSubmit">
 </form>
 {% endblock %}
