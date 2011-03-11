@@ -225,6 +225,19 @@ def tag_ideas(request, object_name, **kwargs):
     c = RequestContext(request, { 'object_list' : objects })
     return render_to_response('main/idea_list.html', c)
 
+def tag_filter_ideas(request, tag_list, **kwargs):
+    ideas = Idea.objects.all()
+    tags_list = tag_list.split('/')
+    for tag_string in tags_list:
+        idea_list = get_object_or_404(Tag, name__iexact=tag_string).ideas.all()
+        ideas = list(set(ideas) & set(idea_list))
+
+    if not ideas:
+        return Http404()
+
+    c = RequestContext(request, { 'object_list' : ideas })
+    return render_to_response('main/idea_list.html', c)
+
 @login_required
 def image_upload(request, object_id, *args, **kwargs):
     if request.method == "POST":
