@@ -185,3 +185,19 @@ def tag_suggest(request, **kwargs):
     json.serialize(Tag.objects.filter(name__istartswith=search),
                     fields=("name"), stream=response)
     return response
+
+@login_required
+def image_upload(request, object_id, *args, **kwargs):
+    if request.method == "POST":
+        idea = get_object_or_404(Idea, pk=object_id)
+        new_image = Image(idea=idea, uploader=request.user.get_profile())
+        upload_form = ImageUploadForm(request.POST, request.FILES, instance=new_image)
+        if upload_form.is_valid():
+            upload_form.save()
+            return HttpResponse("Yay!")
+    else:
+        upload_form = ImageUploadForm()
+
+    kwargs.update(csrf(request))
+    c = RequestContext(request, dict(form=upload_form, **kwargs))
+    return render_to_response('main/image_form.html', c)
