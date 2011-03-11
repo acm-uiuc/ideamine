@@ -74,22 +74,22 @@
 	<th>last_login</th>
 	<th>date_joined</th>
   </tr>
-  {% for obj in object_list %}
+  {% for profile in object_list %}
   <tr>
-	<td>{{ obj.pk }}</td>
-	<td>{{ obj.username }}</td>
-	<td>{{ obj.first_name }}</td>
-	<td>{{ obj.last_name }}</td>
-	<td>{{ obj.email }}</td>
-	<td>{{ obj.is_staff }}</td>
-	<td>{{ obj.is_active }}</td>
-	<td>{{ obj.is_superuser }}</td>
-	<td>{{ obj.last_login }}</td>
-	<td>{{ obj.date_joined }}</td>
-	{% if obj.get_profile in object.uncomfirmed_members %}
+	<td>{{ profile.pk }}</td>
+	<td>{{ profile.username }}</td>
+	<td>{{ profile.first_name }}</td>
+	<td>{{ profile.last_name }}</td>
+	<td>{{ profile.email }}</td>
+	<td>{{ profile.is_staff }}</td>
+	<td>{{ profile.is_active }}</td>
+	<td>{{ profile.is_superuser }}</td>
+	<td>{{ profile.last_login }}</td>
+	<td>{{ profile.date_joined }}</td>
+	{% if profile in object.unconfirmed_members.all %}
 	<td>
 	<form method="post" action="{% url idea_confirm_member object.pk %}">
-	  <input type="hidden" value="{{ obj.pk }}" name="user_pk" />
+	  <input type="hidden" value="{{ profile.pk }}" name="user_pk" />
 	  {% csrf_token %}
 	  <input type="submit" value="Confirm Member" />
 	</form>
