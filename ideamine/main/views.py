@@ -214,7 +214,7 @@ def tag_suggest(request, **kwargs):
     response_list = []
 
     for tag in tags:
-        response_list.append([tag.pk, tag.name])
+        response_list.append([tag.name, tag.name])
 
     response.content = json.dumps(response_list)
     return response
