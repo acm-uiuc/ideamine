@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block title %}Ideamine - {{ shortmsg }} {% endblock %}
+
+{% block content %}
+
+<h1> {{ shortmsg }} </h1>
+<p> {{ msg }} </p>
+
+<p>
+<a href="{% url main.views.index %}">
+Return to IdeaMine
+</a>
+</p>
+
+{% endblock %}

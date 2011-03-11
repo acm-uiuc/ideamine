@@ -130,20 +130,26 @@ def idea_update(request, object_id, **kwargs):
             redirect_to = update_idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
-        HttpResponse("Method incorrectly called with get")
+        c = RequestContext(request, {"shortmsg":"Request Error",
+            "msg":"Method incorrectly called with get"})
+        return render_to_response('notifications/notify.html', c)
 
 @login_required
 def idea_join(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.is_member(request.user) or idea.is_owner(request.user):
-            return HttpResponse("You're already a member")
+            c = RequestContext(request, {"shortmsg":"Error",
+                "msg":"You are already a member of this project."})
+            return render_to_response('notifications/notify.html', c)
 
         idea.add_member(request.user)
         redirect_to = idea.get_absolute_url()
         return HttpResponseRedirect(redirect_to)
     else:
-        return HttpResponse("Method incorrectly called with get")
+        c = RequestContext(request, {"shortmsg":"Request Error",
+            "msg":"Method incorrectly called with get"})
+        return render_to_response('notifications/notify.html', c)
 
 @login_required
 def idea_leave(request, object_id, *args, **kwargs):
@@ -154,9 +160,13 @@ def idea_leave(request, object_id, *args, **kwargs):
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
 
-        return HttpResponse("You're not a member")
+        c = RequestContext(request, {"shortmsg":"Error",
+            "msg":"You are not a member of this project."})
+        return render_to_response('notifications/notify.html', c)
     else:
-        return HttpResponse("Method incorrectly called with get")
+        c = RequestContext(request, {"shortmsg":"Request Error",
+            "msg":"Method incorrectly called with get"})
+        return render_to_response('notifications/notify.html', c)
 
 @login_required
 def idea_destroy(request, object_id, *kwargs):
@@ -164,11 +174,15 @@ def idea_destroy(request, object_id, *kwargs):
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.can_destroy(request.user):
             idea.delete()
-            return HttpResponse("Idea deleted")
+            c = RequestContext(request, {"shortmsg":"Idea Deleted",
+                "msg":"Idea successfully deleted."})
+            return render_to_response('notifications/notify.html', c)
         else:
             return HttpResponseForbidden()
     else:
-        return HttpResponse("Method incorrectly called with get")
+        c = RequestContext(request, {"shortmsg":"Request Error",
+            "msg":"Method incorrectly called with get"})
+        return render_to_response('notifications/notify.html', c)
 
 @login_required
 def confirm_member(request, object_id, *args, **kwargs):
@@ -182,11 +196,19 @@ def confirm_member(request, object_id, *args, **kwargs):
                     if not idea.is_confirmed(user.user):
                         idea.confirm_member(user.user)
                     else:
-                        return HttpResponse("User is already confirmed.")
+                        c = RequestContext(request, {"shortmsg":"Error",
+                            "msg":"This user is already a confirmed member."})
+                        return render_to_response('notifications/notify.html', c)
                 else:
-                    return HttpResponse("User is not a member of this project.")
+                    c = RequestContext(request, {"shortmsg":"Error",
+                        "msg":"This user is not a member of this project"})
+                    return render_to_response('notifications/notify.html', c)
+        else:
+            return HttpResponseForbidden()
     else:
-        return HttpResponse("Method incorrectly called with get")
+        c = RequestContext(request, {"shortmsg":"Request Error",
+            "msg":"Method incorrectly called with get"})
+        return render_to_response('notifications/notify.html', c)
 
     redirect_to = idea.get_absolute_url()
     return HttpResponseRedirect(redirect_to)
