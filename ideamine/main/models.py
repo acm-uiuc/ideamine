@@ -27,6 +27,18 @@ class UserProfile(models.Model):
     def username(self):
         return self.user.username
 
+    def owned_idea_count(self):
+        return self.owned_ideas.count()
+
+    def joined_idea_count(self):
+        return self.joined_ideas.count()
+
+    def followers(self):
+        users = dict()
+        for idea in self.owned_ideas.all():
+            users.update(dict.fromkeys(idea.members.all()))
+        return len(users)
+
     def can_update_user(self, user):
         return self.user.has_perms('main.change_user') or user.pk == self.user.pk
 

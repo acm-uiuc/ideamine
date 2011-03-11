@@ -24,12 +24,13 @@
   </tr>
 </table>
 {% endif %}
-<h3>Owned Ideas</h3>
+<h3>Owned Ideas: {{ object.get_profile.owned_idea_count }}</h3>
 {% with object.get_profile.owned_ideas.all as object_list %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
+<p>Followers: {{ object.get_profile.followers }}</p>
 <p><a href="{% url idea_create %}">Create Idea</a></p>
-<h3>Joined Ideas</h3>
+<h3>Joined Ideas: {{ object.get_profile.joined_idea_count }}</h3>
 {% with object.get_profile.joined_ideas.all as object_list %}
 {% include 'main/idea_table.html' %}
 {% endwith %}
