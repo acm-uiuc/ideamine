@@ -3,6 +3,8 @@
 
 {% block title %}{{ object.short_name|title }}{% endblock %}
 
+{% block head %}{% endlbock %}
+
 {% block content %}
 {% if form %}
 <form action="{% url idea_update object.pk %}" method="post">
