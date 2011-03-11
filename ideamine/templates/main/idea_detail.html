@@ -102,5 +102,6 @@
 {% render_comment_list for object %}
 {% if user.is_authenticated %}
 {% render_comment_form for object %}
+<a href="{% url image_upload object.pk %}">Upload an image</a>
 {% endif %}
 {% endblock %}

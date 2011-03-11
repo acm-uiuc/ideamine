@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+import os
 
 class Tag(models.Model):
     name = models.CharField(max_length=25)
@@ -107,3 +108,12 @@ class JoinedUser(models.Model):
     confirmed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+class Image(models.Model):
+    def path(instance, filename):
+       return 'images/%d' % instance.idea.pk
+
+    idea = models.ForeignKey(Idea, related_name='images')
+    uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
+    uploader = models.ForeignKey(UserProfile, related_name='uploaded_images')
+    image = models.ImageField(upload_to=path)

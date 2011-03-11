@@ -22,3 +22,8 @@ class IdeaUpdateForm(ModelForm):
     class Meta:
         model = Idea
         fields = ('desc', 'short_name', 'tags')
+
+class ImageUploadForm(ModelForm):
+    class Meta:
+        model = Image
+        exclude = ('idea', 'uploader')
