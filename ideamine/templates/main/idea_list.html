@@ -3,7 +3,7 @@
 {% block title %}Ideas{% endblock %}
 
 {% block content %}
-<a href="{% url idea_create %}">Create an idea</a>
+<a href="{% url idea_create %}" class="button">Create an idea</a>
 {% include 'main/idea_table.html' %}
 {% if is_paginated %}
 {% if page_obj.has_previous %}
