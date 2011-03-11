@@ -11,6 +11,11 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.name
 
+    def delete_orphaned():
+        for tag in Tag.objects.all():
+            if not tag.ideas:
+                tag.delete()
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -96,12 +101,11 @@ class Idea(models.Model):
         return None
 
     def change_tags(self, tags_string):
-        for tag in self.tags.all():
-            tag.ideas.remove(self)
+        self.tags.clear()
         tag_list = tags_string.split()
         for tag_s in tag_list:
             try:
-                tag = Tag.objects.get(name=tag_s)
+                tag = Tag.objects.get(name__iexact=tag_s)
                 tag.ideas.add(self)
             except ObjectDoesNotExist:
                 self.tags.create(name=tag_s)
