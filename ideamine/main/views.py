@@ -216,7 +216,7 @@ def confirm_member(request, object_id, *args, **kwargs):
 
 def tag_suggest(request, **kwargs):
     response = HttpResponse(mimetype="text/json")
-    search = request.GET['s']
+    search = request.GET['search']
     tags = Tag.objects.filter(name__istartswith=search)
     response_list = []
 
