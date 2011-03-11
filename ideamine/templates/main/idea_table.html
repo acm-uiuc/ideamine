@@ -12,7 +12,9 @@
           <div class="progBar">Progress: </div>
         </div>
 		<ul class="tagBlock">
-		  {{ idea.tags.all|unordered_list }}
+		  {% for tag in idea.tags.all %}
+		  <li><a href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
+		  {% endfor %}
 		</ul>
         <div class="clear"></div>
       </div>

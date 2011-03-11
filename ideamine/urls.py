@@ -13,7 +13,8 @@ ideas = { 'queryset' : Idea.objects.all() }
 urlpatterns = patterns('',
     (r'^$', 'main.views.index'),
 
-    (r'^tags/suggest', 'main.views.tag_suggest', {}, 'tag_suggest'),
+    (r'^tags/(?P<object_name>\S+)', 'main.views.tag_ideas', {}, 'tag_ideas'),
+    (r'^tags', 'main.views.tag_suggest', {}, 'tag_suggest'),
 
     (r'^users/(?P<object_id>\d+)/update', 'main.views.user_update', {}, 'user_update'),
     (r'^users/(?P<object_id>\d+)', 'main.views.user_detail', {}, 'user_detail'),

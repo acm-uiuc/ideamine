@@ -4,17 +4,17 @@ $(function() { // onload
 	// change space delimited to comma delimited
 	var existingTags = $("input#id_tags_field").val();
 	$("input#id_tags_field").val(existingTags.replace(/ /g, ','));
-	
+
 	// sets up textbox list
 	var t = new $.TextboxList('input#id_tags_field', {
-	    unique: true,
-	    plugins: {'autocomplete': {
-	    	minLength: 2,
-	    	queryRemote: true,
-	    	remote: {url: '/tags/suggest'}
-	    }}
+		unique: true,
+		plugins: {'autocomplete': {
+			minLength: 2,
+			queryRemote: true,
+			remote: {url: '/tags'}
+		}}
 	});
-	
+
 	// reverse the delimitation: comma to space
 	$("input#ideaSubmit").click(function() {
 		var existingTags = $("input#id_tags_field").val();

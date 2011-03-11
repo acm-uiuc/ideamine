@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+
 import os
 
 class Tag(models.Model):
@@ -15,6 +16,10 @@ class Tag(models.Model):
         for tag in Tag.objects.all():
             if not tag.ideas:
                 tag.delete()
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('tag_ideas', (), { 'object_name' : self.name })
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

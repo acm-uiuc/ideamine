@@ -219,6 +219,12 @@ def tag_suggest(request, **kwargs):
     response.content = json.dumps(response_list)
     return response
 
+def tag_ideas(request, object_name, **kwargs):
+    tag = get_object_or_404(Tag, name__iexact=object_name)
+    objects = tag.ideas.all()
+    c = RequestContext(request, { 'object_list' : objects })
+    return render_to_response('main/idea_list.html', c)
+
 @login_required
 def image_upload(request, object_id, *args, **kwargs):
     if request.method == "POST":
