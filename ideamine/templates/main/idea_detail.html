@@ -33,7 +33,13 @@
   </tr>
 </table>
 {% endif %}
-{% if user.get_profile == object.owner %}
+
+{% if can_delete %}
+<form action="{% url idea_destroy object.pk %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Delete Idea">
+</form>
+{% endif %}
 
 {% with object.unconfirmed_members as object_list %}
 {% with True as edit %}
@@ -77,8 +83,6 @@
 {% endif %}
 {% endwith %}{% endwith %}
 
-{% else %}
-
 {% if not user.get_profile in object.members.all %}
 <form method = "post" action = "{% url user_join_idea object.pk %}">
   {% csrf_token %}
@@ -89,8 +93,6 @@
   {% csrf_token %}
   <input type = "submit" value = "Leave Project" />
 </form>
-{% endif %}
-
 {% endif %}
 
 <h3>Description</h3>

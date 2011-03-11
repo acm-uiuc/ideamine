@@ -52,6 +52,9 @@ class Idea(models.Model):
     def can_edit(self, user):
         return self.is_confirmed(user) or self.is_owner(user)
 
+    def can_destroy(self, user):
+        return self.is_owner(user) or user.has_perms('main.delete_idea')
+
     def is_confirmed(self, user):
         try:
             self.confirmed_members().get(pk=user.get_profile().pk)

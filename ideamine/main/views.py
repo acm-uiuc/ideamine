@@ -100,6 +100,8 @@ def idea_create(request, *args, **kwargs):
 def idea_detail(request, object_id, **kwargs):
     update_idea = get_object_or_404(Idea, pk=object_id)
     request_profile = request.user.get_profile()
+    if update_idea.can_destroy(request.user):
+        kwargs['can_delete'] = True
     if request.method == 'POST':
         if request_profile.can_update_idea(update_idea):
             idea_form = IdeaUpdateForm(request.POST, instance=update_idea)
@@ -160,6 +162,18 @@ def idea_leave(request, object_id, *args, **kwargs):
             return HttpResponseRedirect(redirect_to)
 
         return HttpResponse("You're not a member")
+    else:
+        return HttpResponse("Method incorrectly called with get")
+
+@login_required
+def idea_destroy(request, object_id, *kwargs):
+    if request.method == 'POST':
+        idea = get_object_or_404(Idea, pk=object_id)
+        if idea.can_destroy(request.user):
+            idea.delete()
+            return HttpResponse("Idea deleted")
+        else:
+            return HttpResponseForbidden()
     else:
         return HttpResponse("Method incorrectly called with get")
 
