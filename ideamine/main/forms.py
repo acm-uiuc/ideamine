@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import Form
 from main.models import *
 
 class IdeaForm(ModelForm):
@@ -27,3 +28,6 @@ class ImageUploadForm(ModelForm):
     class Meta:
         model = Image
         exclude = ('idea', 'uploader')
+
+class UserConfirmForm(Form):
+    user_pk = forms.ModelChoiceField(queryset=UserProfile.objects.all())
