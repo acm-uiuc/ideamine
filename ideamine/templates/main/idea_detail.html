@@ -54,7 +54,7 @@
 {% endif %}
 
 {% if form %}
-{% with object.unconfirmed_members as object_list %}
+{% with object.members.all as object_list %}
 {% with True as edit %}
 {% if object_list %}
 <table>
@@ -82,7 +82,7 @@
 	<td>{{ obj.is_superuser }}</td>
 	<td>{{ obj.last_login }}</td>
 	<td>{{ obj.date_joined }}</td>
-	{% if not obj.is_confirmed %}
+	{% if obj.get_profile in object.uncomfirmed_members %}
 	<td>
 	<form method="post" action="{% url idea_confirm_member object.pk %}">
 	  <input type="hidden" value="{{ obj.pk }}" name="user_pk" />
