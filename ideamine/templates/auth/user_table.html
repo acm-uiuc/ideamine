@@ -1,29 +1,21 @@
 {% if object_list %}
 <table>
   <tr>
-	<th>pk</th>
 	<th>username</th>
 	<th>first_name</th>
 	<th>last_name</th>
-	<th>email</th>
-	<th>is_staff</th>
-	<th>is_active</th>
-	<th>is_superuser</th>
-	<th>last_login</th>
-	<th>date_joined</th>
+	<th>Created Ideas</th>
+	<th>Joined Ideas</th>
+	<th>Followers</th>
   </tr>
   {% for user in object_list %}
   <tr>
-	<td>{{ user.pk }}</td>
 	<td>{{ user.username }}</td>
 	<td>{{ user.first_name }}</td>
 	<td>{{ user.last_name }}</td>
-	<td>{{ user.email }}</td>
-	<td>{{ user.is_staff }}</td>
-	<td>{{ user.is_active }}</td>
-	<td>{{ user.is_superuser }}</td>
-	<td>{{ user.last_login }}</td>
-	<td>{{ user.date_joined }}</td>
+	<td>{{ user.get_profile.owned_idea_count }}</td>
+	<td>{{ user.get_profile.joined_idea_count }}</td>
+	<td>{{ user.get_profile.followers }}</td>
   </tr>
   {% endfor %}
 </table>
