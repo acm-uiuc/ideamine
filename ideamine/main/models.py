@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import os
 
 class Tag(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, unique=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -40,12 +40,14 @@ class UserProfile(models.Model):
 class Idea(models.Model):
     owner = models.ForeignKey(UserProfile, related_name='owned_ideas')
     short_name = models.CharField(max_length=50, unique=True)
-    desc = models.TextField()
+    desc = models.TextField(verbose_name='description')
     tags = models.ManyToManyField(Tag, related_name='ideas', blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     members = models.ManyToManyField(UserProfile, related_name='joined_ideas',
                                      through='JoinedUser', editable=False)
+    progress = models.SmallIntegerField(default=0)
+    website = models.URLField(blank=True)
 
     def confirm_member(self, user):
         try:
