@@ -113,7 +113,7 @@
 <h3>Images</h3>
 {% if object.images %}
 {% for img in object.images.all %}
-<p><img src="{{ img.get_absolute_url }}"/></p>
+<p><a href="{{ img.get_absolute_url }}"><img src="{{ img.get_absolute_url }}"/></a></p>
 {% endfor %}
 {% else %}
 <p>No images uploaded.</p>

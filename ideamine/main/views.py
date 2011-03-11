@@ -214,7 +214,7 @@ def image_upload(request, object_id, *args, **kwargs):
         upload_form = ImageUploadForm(request.POST, request.FILES, instance=new_image)
         if upload_form.is_valid():
             upload_form.save()
-            return HttpResponse("Yay!")
+            return HttpResponseRedirect(idea.get_absolute_url())
     else:
         upload_form = ImageUploadForm()
 
