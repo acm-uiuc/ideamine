@@ -82,7 +82,7 @@ def idea_create(request, *args, **kwargs):
         idea_form = generate_idea_form(idea, request.POST)
         if idea_form.is_valid():
             idea_form.save()
-            idea.add_tags(idea_form.cleaned_data['tags_field'])
+            idea.change_tags(idea_form.cleaned_data['tags_field'])
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
@@ -126,7 +126,7 @@ def idea_update(request, object_id, **kwargs):
         idea_update_form = generate_idea_form(update_idea, request.POST)
         if idea_update_form.is_valid():
             idea_update_form.save()
-            update_idea.add_tags(idea_update_form.cleaned_data['tags_field'])
+            update_idea.change_tags(idea_update_form.cleaned_data['tags_field'])
             redirect_to = update_idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
