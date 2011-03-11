@@ -14,6 +14,7 @@ from main.forms import *
 from main.models import *
 
 import main.signals
+import json
 
 def index(request):
     c = RequestContext(request, {})
@@ -214,11 +215,15 @@ def confirm_member(request, object_id, *args, **kwargs):
     return HttpResponseRedirect(redirect_to)
 
 def tag_suggest(request, **kwargs):
-    json = serializers.get_serializer("json")()
     response = HttpResponse(mimetype="text/json")
     search = request.GET['s']
-    json.serialize(Tag.objects.filter(name__istartswith=search),
-                    fields=("name"), stream=response)
+    tags = Tag.objects.filter(name__istartswith=search)
+    response_list = []
+
+    for tag in tags:
+        response_list.append([tag.pk, tag.name])
+
+    response.content = json.dumps(response_list)
     return response
 
 @login_required
