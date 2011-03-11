@@ -90,15 +90,21 @@ class Idea(models.Model):
         joineduser = self.joineduser(user)
         return joineduser.delete()
 
-    def add_tags(self, tags_string):
-        tag_list = tags_string.split()
-        for tag in tag_list:
-            self.tags.create(name=tag)
-
     def tags_to_s(self):
         if self.tags.exists():
             return " ".join(map(Tag.__str__, self.tags.all()))
         return None
+
+    def change_tags(self, tags_string):
+        for tag in self.tags.all():
+            tag.ideas.remove(self)
+        tag_list = tags_string.split()
+        for tag_s in tag_list:
+            try:
+                tag = Tag.objects.get(name=tag_s)
+                tag.ideas.add(self)
+            except ObjectDoesNotExist:
+                self.tags.create(name=tag_s)
 
     def __unicode__(self):
         return '%s: %s' % (self.short_name, self.owner)

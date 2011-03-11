@@ -14,6 +14,7 @@ from main.forms import *
 from main.models import *
 
 import main.signals
+import json
 
 def index(request):
     c = RequestContext(request, {})
@@ -82,7 +83,7 @@ def idea_create(request, *args, **kwargs):
         idea_form = generate_idea_form(idea, request.POST)
         if idea_form.is_valid():
             idea_form.save()
-            idea.add_tags(idea_form.cleaned_data['tags_field'])
+            idea.change_tags(idea_form.cleaned_data['tags_field'])
             redirect_to = idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
@@ -126,7 +127,7 @@ def idea_update(request, object_id, **kwargs):
         idea_update_form = generate_idea_form(update_idea, request.POST)
         if idea_update_form.is_valid():
             idea_update_form.save()
-            update_idea.add_tags(idea_update_form.cleaned_data['tags_field'])
+            update_idea.change_tags(idea_update_form.cleaned_data['tags_field'])
             redirect_to = update_idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
@@ -214,11 +215,15 @@ def confirm_member(request, object_id, *args, **kwargs):
     return HttpResponseRedirect(redirect_to)
 
 def tag_suggest(request, **kwargs):
-    json = serializers.get_serializer("json")()
     response = HttpResponse(mimetype="text/json")
     search = request.GET['s']
-    json.serialize(Tag.objects.filter(name__istartswith=search),
-                    fields=("name"), stream=response)
+    tags = Tag.objects.filter(name__istartswith=search)
+    response_list = []
+
+    for tag in tags:
+        response_list.append([tag.pk, tag.name])
+
+    response.content = json.dumps(response_list)
     return response
 
 @login_required
