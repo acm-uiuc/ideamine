@@ -4,12 +4,16 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class Tag(models.Model):
     name = models.CharField(max_length=25)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __unicode__(self):
         return self.name
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def username(self):
         return self.user.username
@@ -98,3 +102,5 @@ class JoinedUser(models.Model):
     user = models.ForeignKey(UserProfile)
     idea = models.ForeignKey(Idea)
     confirmed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
