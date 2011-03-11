@@ -3,7 +3,7 @@
 $(function() { // onload
 	// change space delimited to comma delimited
 	var existingTags = $("input#id_tags_field").val();
-	$("input#id_tags_field").val(existingTags.replace(' ', ','));
+	$("input#id_tags_field").val(existingTags.replace(/ /g, ','));
 	
 	// sets up textbox list
 	var t = new $.TextboxList('input#id_tags_field', {
