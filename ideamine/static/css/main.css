@@ -91,7 +91,7 @@ ul.idealist {
 	list-style: none;
 	padding: 0;
 }
-ul.idealist li {
+ul.idealist li.idea {
 	border: solid black 1px;
 	border-top: 0;
 }
