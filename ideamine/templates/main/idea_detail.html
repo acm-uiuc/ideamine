@@ -59,20 +59,20 @@
 	<th>last_login</th>
 	<th>date_joined</th>
   </tr>
-  {% for user in object_list %}
+ {% for member in object_list %}
   <tr>
-	<td>{{ user.pk }}</td>
-	<td>{{ user.username }}</td>
-	<td>{{ user.first_name }}</td>
-	<td>{{ user.last_name }}</td>
-	<td>{{ user.email }}</td>
-	<td>{{ user.is_staff }}</td>
-	<td>{{ user.is_active }}</td>
-	<td>{{ user.is_superuser }}</td>
-	<td>{{ user.last_login }}</td>
-	<td>{{ user.date_joined }}</td>
+	<td>{{ member.pk }}</td>
+	<td>{{ member.username }}</td>
+	<td>{{ member.first_name }}</td>
+	<td>{{ member.last_name }}</td>
+	<td>{{ member.email }}</td>
+	<td>{{ member.is_staff }}</td>
+	<td>{{ member.is_active }}</td>
+	<td>{{ member.is_superuser }}</td>
+	<td>{{ member.last_login }}</td>
+	<td>{{ member.date_joined }}</td>
 	<td>
-	<form method="post" action="{% url idea_confirm_member object.pk user.user.pk %}">
+	<form method="post" action="{% url idea_confirm_member object.pk member.user.pk %}">
 	  {% csrf_token %}
 	  <input type="submit" value="Confirm Member" />
 	</form>
@@ -99,6 +99,19 @@
 
 <h3>Description</h3>
 <p>{{ object.desc }}</p>
+
+<h3>Images</h3>
+{% if object.images %}
+{% for img in object.images.all %}
+<p><img src="{{ img.get_absolute_url }}"/></p>
+{% endfor %}
+{% else %}
+<p>No images uploaded.</p>
+{% endif %}
+
+{% if form %}
+<a href="{% url image_upload object.pk %}">Upload an image</a>
+{% endif %}
 
 <h3>Comments</h3>
 {% render_comment_list for object %}
