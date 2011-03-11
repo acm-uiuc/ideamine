@@ -50,6 +50,7 @@
 </form>
 {% endif %}
 
+{% if form %}
 {% with object.unconfirmed_members as object_list %}
 {% with True as edit %}
 {% if object_list %}
@@ -94,6 +95,7 @@
 <p>{{ emptymessage|default:'No Users' }}</p>
 {% endif %}
 {% endwith %}{% endwith %}
+{% endif %}
 
 {% if not user.get_profile in object.members.all and not user.get_profile == object.owner %}
 <form method = "post" action = "{% url user_join_idea object.pk %}">
