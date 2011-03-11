@@ -95,6 +95,11 @@ class Idea(models.Model):
         for tag in tag_list:
             self.tags.create(name=tag)
 
+    def tags_to_s(self):
+        if self.tags.exists():
+            return " ".join(map(Tag.__str__, self.tags.all()))
+        return None
+
     def __unicode__(self):
         return '%s: %s' % (self.short_name, self.owner)
 

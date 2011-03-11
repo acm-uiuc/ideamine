@@ -104,7 +104,7 @@ def idea_detail(request, object_id, **kwargs):
         kwargs['can_delete'] = True
     if request.method == 'POST':
         if request_profile.can_update_idea(update_idea):
-            idea_form = IdeaUpdateForm(request.POST, instance=update_idea)
+            idea_form = generate_idea_form(update_idea, request.POST)
             kwargs['form'] = idea_form
             if idea_form.is_valid():
                 idea_form.save()
@@ -114,7 +114,7 @@ def idea_detail(request, object_id, **kwargs):
             return HttpResponseForbidden()
     else:
         if request_profile.can_update_idea(update_idea):
-            idea_form = IdeaUpdateForm(instance=update_idea)
+            idea_form = generate_idea_form(update_idea)
             kwargs['form'] = idea_form
 
     kwargs.update(csrf(request))
@@ -127,17 +127,14 @@ def idea_update(request, object_id, **kwargs):
     if not request.user.get_profile().can_update_idea(update_idea):
         return HttpResponseForbidden()
     if request.method == 'POST':
-        idea_update_form = IdeaUpdateForm(request.POST, instance=update_idea)
+        idea_update_form = generate_idea_form(update_idea, request.POST)
         if idea_update_form.is_valid():
             idea_update_form.save()
+            update_idea.add_tags(idea_update_form.cleaned_data['tags_field'])
             redirect_to = update_idea.get_absolute_url()
             return HttpResponseRedirect(redirect_to)
     else:
-        idea_update_form = IdeaUpdateForm(instance=update_idea)
-
-    kwargs.update(csrf(request))
-    c = RequestContext(request, dict(form=idea_update_form, **kwargs))
-    return render_to_response('main/idea_form.html', c)
+        HttpResponse("Method incorrectly called with get")
 
 @login_required
 def idea_join(request, object_id, *args, **kwargs):
