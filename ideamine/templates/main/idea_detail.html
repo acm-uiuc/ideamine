@@ -37,7 +37,12 @@
 	</tr>
 	<tr>
 		<th>Tags:</th>
-		<td><ul>{{ object.tags.all|unordered_list }}</ul></td>
+		<td>
+			<ul class="tagBlock">
+			{% for tag in object.tags.all %}
+			<li><a href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
+			{% endfor %}
+			</ul>
 	</tr>
 	<tr>
 		<th>Current Members:</th>
@@ -123,7 +128,7 @@
 <h3>Images</h3>
 {% if object.images %}
 {% for img in object.images.all %}
-<p><a href="{{ img.get_absolute_url }}"><img src="{{ img.get_absolute_url }}"/></a></p>
+<p><a href="{{ img.get_absolute_url }}"><img class="thumb" src="{{ img.get_absolute_url }}"/></a></p>
 {% endfor %}
 {% else %}
 <p>No images uploaded.</p>
