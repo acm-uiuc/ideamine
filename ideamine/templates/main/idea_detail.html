@@ -3,7 +3,14 @@
 
 {% block title %}{{ object.short_name|title }}{% endblock %}
 
-{% block head %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="static/css/textboxlist/TextboxList.css" />
+<link rel="stylesheet" type="text/css" href="static/css/textboxlist/TextboxList.Autocomplete.css" />
+
+<script type="text/javascript" src="/static/js/textboxlist/GrowingInput.js"></script>
+<script type="text/javascript" src="/static/js/textboxlist/TextboxList.js"></script>
+<script type="text/javascript" src="/static/js/textboxlist/TextboxList.Autocomplete.js"></script>
+{% endblock %}
 
 {% block content %}
 {% if form %}

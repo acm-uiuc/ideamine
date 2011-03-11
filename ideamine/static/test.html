@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="includes/textboxlist/TextboxList.css" />
+	<link rel="stylesheet" type="text/css" href="includes/textboxlist/TextboxList.Autocomplete.css" />
+	
+	<script type="text/javascript" src="includes/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="includes/GrowingInput.js"></script>
+	<script type="text/javascript" src="includes/textboxlist/TextboxList.js"></script>
+	<script type="text/javascript" src="includes/textboxlist/TextboxList.Autocomplete.js"></script>
+	
+	<script type="text/javascript">
+		$(function() {						
+			// TEXTBOXLIST
+			var t = new $.TextboxList('input#tags', {
+				bitsOptions: {editable: {addKeys: [32]}},
+				unique: true,
+				plugins: {autocomplete: {
+					minLength: 2,
+					queryRemote: true,
+					remote: {url: 'URL_GOES_HERE.php'} // REPLACE URL WITH A VALID ONE
+				}}
+			});
+			
+			var existingTags = $("input#tags").text().split(' ');
+			for (var i = 0; i < existingTags.length; i++) {
+				t.add(existingTags[i]);
+			}
+			
+			// not sure what to do for the submit.
+			// the demo seems to put it into an array.
+			// you can intercept the submit on the js end to parse the tags into a different format (json?) though if you want
+			// let me know if you need help w/ that.
+			
+			// CLICK TO EDIT EXAMPLE CODE
+			// the html / class I use here is changeable
+			// just as long as you can use CSS selectors (used by jquery) to reference the inputted text independently of
+			// the category name
+			
+			// effect is applied to all category / input text combos that match the css descriptor
+			// note name is required for the form to submit normally (not necessarily needed for custom submission processes)
+			// note the class 'edited' is set for easy processing / finding of edited elements (use the selector 'input.edited')
+			$("p.displayInput span").click(function() { // remove the ' span' to have this effect occur when anywhere on the line is clicked, not just the input text
+				$(this).replaceWith("<input type='text' class='edited' name='"+getUntilChar($(this).parent().text(), ':')+"' value='"+$(this).text()+"' />");
+				$('button#submitEdits').show(); // slightly redundant, but much less complicated
+			});
+			
+			// helper functions
+			
+			// gets a substring of str from 0 through the character before the first time char occurs
+			function getUntilChar(str, char) {
+				return str.substr(0, str.indexOf(char));
+			}
+		});
+	</script>
+	<style type="text/css">
+		button#submitEdits {display:none;}
+	</style>
+</head>
+
+<body>
+	<!-- Example HTML -->
+	<h1>Textbox List Example</h1>
+	<input id="tags" type="text" /> <!-- required, can't spell today :( -->
+	<h1>Edit on Click Example</h1>
+	<p class="displayInput">Some Category Name: <span>Some Inputed Text</span></p>
+	<button type="submit" id="submitEdits">Submit Edits</button>
+</body>
+
+</html>
