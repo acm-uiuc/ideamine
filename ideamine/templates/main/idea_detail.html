@@ -4,49 +4,52 @@
 {% block title %}{{ object.short_name|title }}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="static/css/textboxlist/TextboxList.css" />
-<link rel="stylesheet" type="text/css" href="static/css/textboxlist/TextboxList.Autocomplete.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/ideaEdit.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/textboxlist/TextboxList.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/textboxlist/TextboxList.Autocomplete.css" />
 
 <script type="text/javascript" src="/static/js/textboxlist/GrowingInput.js"></script>
 <script type="text/javascript" src="/static/js/textboxlist/TextboxList.js"></script>
 <script type="text/javascript" src="/static/js/textboxlist/TextboxList.Autocomplete.js"></script>
+<script type="text/javascript" src="/static/js/tagInput.js"></script>
 {% endblock %}
 
 {% block content %}
 {% if form %}
 <form action="{% url idea_update object.pk %}" method="post">
-  <table>
-	{{ form.as_table }}
-  </table>
-  {% csrf_token %}
-  <input type="submit" value="Update Idea">
+	<fieldset>
+		<legend>Edit Your Idea</legend>
+		{{ form.as_p }}
+	</fieldset>
+	{% csrf_token %}
+	<input type="submit" value="Update Idea">
 </form>
 {% else %}
 <h2>{{ object.short_name|title }}</h2>
 <table>
-  <tr>
-	<th>Owner:</th>
-	<td><a href="{% url user_detail object.owner.user.id %}">{{ object.owner }}</a></td>
-  </tr>
-  <tr>
-	<th>Created:</th>
-	<td>{{ object.created_at }}</td>
-  </tr>
-  <tr>
-	<th>Tags:</th>
-	<td><ul>{{ object.tags.all|unordered_list }}</ul></td>
-  </tr>
-  <tr>
-	<th>Current Members:</th>
-	<td>{{ object.members.all.count }}</td>
-  </tr>
+	<tr>
+		<th>Owner:</th>
+		<td><a href="{% url user_detail object.owner.user.id %}">{{ object.owner }}</a></td>
+	</tr>
+	<tr>
+		<th>Created:</th>
+		<td>{{ object.created_at }}</td>
+	</tr>
+	<tr>
+		<th>Tags:</th>
+		<td><ul>{{ object.tags.all|unordered_list }}</ul></td>
+	</tr>
+	<tr>
+		<th>Current Members:</th>
+		<td>{{ object.members.all.count }}</td>
+	</tr>
 </table>
 {% endif %}
 
 {% if can_delete %}
 <form action="{% url idea_destroy object.pk %}" method="post">
-  {% csrf_token %}
-  <input type="submit" value="Delete Idea">
+	{% csrf_token %}
+	<input type="submit" value="Delete Idea">
 </form>
 {% endif %}
 
@@ -54,38 +57,38 @@
 {% with True as edit %}
 {% if object_list %}
 <table>
-  <tr>
-	<th>pk</th>
-	<th>username</th>
-	<th>first_name</th>
-	<th>last_name</th>
-	<th>email</th>
-	<th>is_staff</th>
-	<th>is_active</th>
-	<th>is_superuser</th>
-	<th>last_login</th>
-	<th>date_joined</th>
-  </tr>
-  {% for user in object_list %}
-  <tr>
-	<td>{{ user.pk }}</td>
-	<td>{{ user.username }}</td>
-	<td>{{ user.first_name }}</td>
-	<td>{{ user.last_name }}</td>
-	<td>{{ user.email }}</td>
-	<td>{{ user.is_staff }}</td>
-	<td>{{ user.is_active }}</td>
-	<td>{{ user.is_superuser }}</td>
-	<td>{{ user.last_login }}</td>
-	<td>{{ user.date_joined }}</td>
-	<td>
-	<form method="post" action="{% url idea_confirm_member object.pk user.user.pk %}">
-	  {% csrf_token %}
-	  <input type="submit" value="Confirm Member" />
-	</form>
-  </td>
-  </tr>
-  {% endfor %}
+	<tr>
+		<th>pk</th>
+		<th>username</th>
+		<th>first_name</th>
+		<th>last_name</th>
+		<th>email</th>
+		<th>is_staff</th>
+		<th>is_active</th>
+		<th>is_superuser</th>
+		<th>last_login</th>
+		<th>date_joined</th>
+	</tr>
+	{% for user in object_list %}
+	<tr>
+		<td>{{ user.pk }}</td>
+		<td>{{ user.username }}</td>
+		<td>{{ user.first_name }}</td>
+		<td>{{ user.last_name }}</td>
+		<td>{{ user.email }}</td>
+		<td>{{ user.is_staff }}</td>
+		<td>{{ user.is_active }}</td>
+		<td>{{ user.is_superuser }}</td>
+		<td>{{ user.last_login }}</td>
+		<td>{{ user.date_joined }}</td>
+		<td>
+		<form method="post" action="{% url idea_confirm_member object.pk user.user.pk %}">
+			{% csrf_token %}
+			<input type="submit" value="Confirm Member" />
+		</form>
+	</td>
+	</tr>
+	{% endfor %}
 </table>
 {% else %}
 <p>{{ emptymessage|default:'No Users' }}</p>
@@ -94,13 +97,13 @@
 
 {% if not user.get_profile in object.members.all %}
 <form method = "post" action = "{% url user_join_idea object.pk %}">
-  {% csrf_token %}
-  <input type = "submit" value = "Join Project" />
+	{% csrf_token %}
+	<input type = "submit" value = "Join Project" />
 </form>
 {% else %}
 <form method = "post" action = "{% url user_leave_idea object.pk %}">
-  {% csrf_token %}
-  <input type = "submit" value = "Leave Project" />
+	{% csrf_token %}
+	<input type = "submit" value = "Leave Project" />
 </form>
 {% endif %}
 

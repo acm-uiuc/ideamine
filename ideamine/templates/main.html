@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>{% block title %}{% endblock %}</title>
-    <link href="/static/ideamine.css" rel="stylesheet" type="text/css">
+    <link href="/static/main.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"></script>
-	{% block head %}{% endblock %}
-  </head>
-  <body>
-    <div id="topbar">
-	  <span id="navigation">
-        <a href="{% url main.views.index %}">Home</a>
-        <a href="{% url idea_list %}">Ideas</a>
-        <a href="{% url user_list %}">Users</a>
-      </span>
-      <span id="user">
-        {% if user.is_authenticated %}
-        Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a> <a href="{% url logout %}">Logout</a>
-        {% else %}
-        <a href="{% url user_create %}">Register</a> <a href="{% url login %}">Login</a>
-        {% endif %}
-      </span>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <div id="siteContainer">
+    	<header id="siteHeader">
+    		<h1>Idea Mine</h1>
+<!--     		<button>Contact Us!</button> -->
+    		<nav>
+    			<ul id="mainNav">
+    				<li><a href="{% url main.views.index %}">Home</a></li>
+    				<li><a href="{% url idea_list %}">Ideas</a></li>
+    				<li><a href="{% url user_list %}">Users</a></li>
+    			</ul>
+    			<ul id="loginNav">
+    				{% if user.is_authenticated %}
+    					<li>Logged in as: <a href="{% url user_detail user.id %}">{{ user.username }}</a></li>
+    					<li><a href="{% url logout %}">Logout</a></li>
+    				{% else %}
+    					<li><a href="{% url user_create %}">Register</a></li>
+    					<li><a href="{% url login %}">Login</a></li>
+    				{% endif %}
+    			</ul>
+    		</nav>
+    	</header>
+    	
+    	<div id="contentContainer">
+	    	<div id="left" class="column">
+	    		<p>Main content</p>
+	    		{% block content %}{% endblock %}
+	    	</div>
+	    	<div id="right" class="column">
+	    		<div class="sidebar">
+	    			<p>Right side<p>
+	    			{% block sidebar %}{% endblock %}
+	    		</div>
+	    	</div>
+    	</div>
+
+		<footer id="siteFooter">
+			<nav>
+				<ul>
+					<li>Link 1</li>
+					<li>Link 2</li>
+					<li>Link 3</li>
+					<li>Link 4</li>
+					<li>Link 5</li>
+				</ul>
+			</nav>
+		</footer>
     </div>
-    <div id="container">
-      <div id="left" class="column">
-        <p>Main content</p>
-        {% block content %}{% endblock %}
-      </div>
-      <div id="right" class="column">
-        <div class="sidebar">
-          <p>Right side<p>
-          {% block sidebar %}{% endblock %}
-        </div>
-      </div>
-    </div>
-    <div id ="footer">
-    </div>
-  </body>
+</body>
+
 </html>

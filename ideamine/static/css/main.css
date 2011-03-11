@@ -1,3 +1,21 @@
+/* HTML5 fix for older browsers */
+header, section, nav, footer {display: block;}
+
+div#siteContainer {
+	margin: 0 auto;
+	width: 700px;
+}
+
+/* Nav */
+nav {}
+nav ul {list-style: none;}
+nav ul li {float: left; padding: 0 5px;}
+
+
+
+
+
+
 #topbar {
 	width: 100%;
 	padding: 0;
