@@ -111,7 +111,7 @@ class JoinedUser(models.Model):
 
 class Image(models.Model):
     def path(instance, filename):
-       return 'images/%d' % instance.idea.pk
+       return 'images/%d/%s' % (instance.idea.pk, filename)
 
     idea = models.ForeignKey(Idea, related_name='images')
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
