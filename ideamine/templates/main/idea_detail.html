@@ -116,6 +116,9 @@
 
 <h3>Description</h3>
 <p>{{ object.desc }}</p>
+{% if object.website %}
+<b>Website:</b> <a href="{{ object.website }}">{{ object.website }}</a>
+{% endif %}
 
 <h3>Images</h3>
 {% if object.images %}
