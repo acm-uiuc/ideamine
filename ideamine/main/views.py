@@ -143,7 +143,7 @@ def idea_update(request, object_id, **kwargs):
 def idea_join(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
-        if idea.is_member(request.user):
+        if idea.is_member(request.user) or idea.is_owner(request.user):
             return HttpResponse("You're already a member")
 
         idea.add_member(request.user)
@@ -178,19 +178,25 @@ def idea_destroy(request, object_id, *kwargs):
         return HttpResponse("Method incorrectly called with get")
 
 @login_required
-def confirm_member(request, object_id, member_id, *args, **kwargs):
+def confirm_member(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
-        if idea.is_owner(request.user):
-            try:
-                prof = idea.members.get(user=member_id)
-                idea.confirm_member(prof.user)
-                redirect_to = idea.get_absolute_url()
-                return HttpResponseRedirect(redirect_to)
-            except ObjectDoesNotExist:
-                return HttpResponse("Given user is not a member of this project")
+        if idea.can_edit(request.user):
+            form = UserConfirmForm(request.POST)
+            if form.is_valid():
+                user = form.cleaned_data['user_pk']
+                if idea.is_member(user.user):
+                    if not idea.is_confirmed(user.user):
+                        idea.confirm_member(user.user)
+                    else:
+                        return HttpResponse("User is already confirmed.")
+                else:
+                    return HttpResponse("User is not a member of this project.")
     else:
         return HttpResponse("Method incorrectly called with get")
+
+    redirect_to = idea.get_absolute_url()
+    return HttpResponseRedirect(redirect_to)
 
 def tag_suggest(request, **kwargs):
     json = serializers.get_serializer("json")()
@@ -208,7 +214,7 @@ def image_upload(request, object_id, *args, **kwargs):
         upload_form = ImageUploadForm(request.POST, request.FILES, instance=new_image)
         if upload_form.is_valid():
             upload_form.save()
-            return HttpResponse("Yay!")
+            return HttpResponseRedirect(idea.get_absolute_url())
     else:
         upload_form = ImageUploadForm()
 

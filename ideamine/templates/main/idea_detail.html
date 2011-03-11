@@ -53,67 +53,86 @@
 </form>
 {% endif %}
 
+{% if form %}
 {% with object.unconfirmed_members as object_list %}
 {% with True as edit %}
 {% if object_list %}
 <table>
-	<tr>
-		<th>pk</th>
-		<th>username</th>
-		<th>first_name</th>
-		<th>last_name</th>
-		<th>email</th>
-		<th>is_staff</th>
-		<th>is_active</th>
-		<th>is_superuser</th>
-		<th>last_login</th>
-		<th>date_joined</th>
-	</tr>
-	{% for user in object_list %}
-	<tr>
-		<td>{{ user.pk }}</td>
-		<td>{{ user.username }}</td>
-		<td>{{ user.first_name }}</td>
-		<td>{{ user.last_name }}</td>
-		<td>{{ user.email }}</td>
-		<td>{{ user.is_staff }}</td>
-		<td>{{ user.is_active }}</td>
-		<td>{{ user.is_superuser }}</td>
-		<td>{{ user.last_login }}</td>
-		<td>{{ user.date_joined }}</td>
-		<td>
-		<form method="post" action="{% url idea_confirm_member object.pk user.user.pk %}">
-			{% csrf_token %}
-			<input type="submit" value="Confirm Member" />
-		</form>
-	</td>
-	</tr>
-	{% endfor %}
+  <tr>
+	<th>pk</th>
+	<th>username</th>
+	<th>first_name</th>
+	<th>last_name</th>
+	<th>email</th>
+	<th>is_staff</th>
+	<th>is_active</th>
+	<th>is_superuser</th>
+	<th>last_login</th>
+	<th>date_joined</th>
+  </tr>
+  {% for obj in object_list %}
+  <tr>
+	<td>{{ obj.pk }}</td>
+	<td>{{ obj.username }}</td>
+	<td>{{ obj.first_name }}</td>
+	<td>{{ obj.last_name }}</td>
+	<td>{{ obj.email }}</td>
+	<td>{{ obj.is_staff }}</td>
+	<td>{{ obj.is_active }}</td>
+	<td>{{ obj.is_superuser }}</td>
+	<td>{{ obj.last_login }}</td>
+	<td>{{ obj.date_joined }}</td>
+	{% if not obj.is_confirmed %}
+	<td>
+	<form method="post" action="{% url idea_confirm_member object.pk %}">
+	  <input type="hidden" value="{{ obj.pk }}" name="user_pk" />
+	  {% csrf_token %}
+	  <input type="submit" value="Confirm Member" />
+	</form>
+	{% endif %}
+  </td>
+  </tr>
+  {% endfor %}
 </table>
 {% else %}
 <p>{{ emptymessage|default:'No Users' }}</p>
 {% endif %}
 {% endwith %}{% endwith %}
+{% endif %}
 
-{% if not user.get_profile in object.members.all %}
+{% if not user.get_profile in object.members.all and not user.get_profile == object.owner %}
 <form method = "post" action = "{% url user_join_idea object.pk %}">
 	{% csrf_token %}
 	<input type = "submit" value = "Join Project" />
 </form>
 {% else %}
+{% if not user.get_profile == object.owner %}
 <form method = "post" action = "{% url user_leave_idea object.pk %}">
 	{% csrf_token %}
 	<input type = "submit" value = "Leave Project" />
 </form>
 {% endif %}
+{% endif %}
 
 <h3>Description</h3>
 <p>{{ object.desc }}</p>
+
+<h3>Images</h3>
+{% if object.images %}
+{% for img in object.images.all %}
+<p><a href="{{ img.get_absolute_url }}"><img src="{{ img.get_absolute_url }}"/></a></p>
+{% endfor %}
+{% else %}
+<p>No images uploaded.</p>
+{% endif %}
+
+{% if form %}
+<a href="{% url image_upload object.pk %}">Upload an image</a>
+{% endif %}
 
 <h3>Comments</h3>
 {% render_comment_list for object %}
 {% if user.is_authenticated %}
 {% render_comment_form for object %}
-<a href="{% url image_upload object.pk %}">Upload an image</a>
 {% endif %}
 {% endblock %}
