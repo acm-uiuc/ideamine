@@ -1,16 +1,14 @@
 /* Form html / css based on http://www.websiteoptimization.com/speed/tweak/forms/ */
+/* Made specifically for adding / editing an idea. */
 
 form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
-  font:100% verdana,arial,sans-serif;
+  font:100% verdana,arial,Helvetica,sans-serif;
   margin: 0;
   padding: 0;
-  min-width: 500px;
-  max-width: 600px;
-  width: 560px; 
 }
 
 form fieldset {
-  / * clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
+  /* clear: both; note that this clear causes inputs to break to left in ie5.x mac, commented out */
   border-color: #000;
   border-width: 1px;
   border-style: solid;
@@ -28,19 +26,24 @@ form label {
 	float: left; 
 	width: 150px; 
 	padding: 0; 
-	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+	margin: 5px 10px 0 0; /* set top margin same as form input - textarea etc. elements */
 	text-align: right; 
 }
 
 form input, form textarea {
 	/* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
-	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
-	margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
+	width:295px;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+	margin:5px 0 0 0; /* set margin on left of form elements rather than right of
                               label aligns textarea better in IE */
 }
 
-textarea { overflow: auto; }
-
-form br {
-	clear:left; /* setting clear on inputs didn't work consistently, so brs added for degrade */
+form ul.textboxlist-bits {
+	width: 295px;
 }
+form div.textboxlist-autocomplete {
+	width: 305px;
+	max-width: 305px;
+	margin-left: 160px;
+}
+
+textarea { overflow: auto; }

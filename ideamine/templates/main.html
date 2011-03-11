@@ -11,7 +11,8 @@
 <body>
     <div id="siteContainer">
     	<header id="siteHeader">
-    		<h1>Idea Mine</h1>
+    		<img src="/static/images/logo.jpg" alt="Idea Mine Logo" />
+<!--     		<h1>Idea Mine</h1> -->
 <!--     		<button>Contact Us!</button> -->
     		<nav>
     			<ul id="mainNav">
@@ -32,29 +33,11 @@
     	</header>
     	
     	<div id="contentContainer">
-	    	<div id="left" class="column">
-	    		<p>Main content</p>
-	    		{% block content %}{% endblock %}
-	    	</div>
-	    	<div id="right" class="column">
-	    		<div class="sidebar">
-	    			<p>Right side<p>
-	    			{% block sidebar %}{% endblock %}
-	    		</div>
-	    	</div>
+	    	{% block content %}{% endblock %}
+<!-- 	    	{% block sidebar %}{% endblock %} -->
     	</div>
 
-		<footer id="siteFooter">
-			<nav>
-				<ul>
-					<li>Link 1</li>
-					<li>Link 2</li>
-					<li>Link 3</li>
-					<li>Link 4</li>
-					<li>Link 5</li>
-				</ul>
-			</nav>
-		</footer>
+		<footer id="siteFooter">Copyright 2011, All Rights Reserved</footer>
     </div>
 </body>
 
