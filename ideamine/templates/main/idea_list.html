@@ -5,4 +5,14 @@
 {% block content %}
 <a href="{% url idea_create %}">Create an idea</a>
 {% include 'main/idea_table.html' %}
+{% if is_paginated %}
+{% if page_obj.has_previous %}
+<a href="{% url idea_list %}?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+Page {{ page_obj.number }}
+{% if page_obj.has_next %}
+<a href="{% url idea_list %}?page={{ page_obj.next_page_number }}">Next</a>
+{% endif %}
+
+{% endif %}
 {% endblock %}

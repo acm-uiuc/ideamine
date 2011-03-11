@@ -30,7 +30,8 @@ urlpatterns = patterns('',
     (r'^ideas/(?P<object_id>\d+)/upload', 'main.views.image_upload', {}, 'image_upload'),
     (r'^ideas/(?P<object_id>\d+)', 'main.views.idea_detail', {}, 'idea_detail'),
     (r'^ideas/create', 'main.views.idea_create', {}, 'idea_create'),
-    (r'^ideas', list_detail.object_list, ideas, 'idea_list'),
+    (r'^ideas', list_detail.object_list,
+     dict(paginate_by=10, **ideas), 'idea_list'),
 
     (r'^comments', include('django.contrib.comments.urls')),
 
