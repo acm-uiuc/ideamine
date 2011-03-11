@@ -20,13 +20,6 @@ def index(request):
     c = RequestContext(request, {})
     return render_to_response("index.html", c)
 
-def members(request, object_id=None):
-    if not object_id:
-        raise Http404
-    return render_to_response("users.html",
-        { 'object_list' : Idea.objects.get(id=object_id).members.all(),
-          'h1' : 'members' })
-
 def user_create(request, *args, **kwargs):
     if request.method == 'POST':
         new_user = User()
