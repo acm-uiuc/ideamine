@@ -18,9 +18,12 @@ $(function() { // onload
 	// reverse the delimitation: comma to space
 	$("input#ideaSubmit").click(function() {
 		var existingTags = $("input#id_tags_field").val();
+		console.log(existingTags);
 		$("input#id_tags_field").val(existingTags.replace(/\b +\b/g, '_'));
-		
 		existingTags = $("input#id_tags_field").val();
-		$("input#id_tags_field").val(existingTags.replace(',', ' '));
+		console.log(existingTags);
+		$("input#id_tags_field").val(existingTags.replace(/,/g, ' '));
+		console.log(existingTags);
+		return false;
 	});
 });
