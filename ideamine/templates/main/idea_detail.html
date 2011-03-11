@@ -95,16 +95,18 @@
 {% endif %}
 {% endwith %}{% endwith %}
 
-{% if not user.get_profile in object.members.all %}
+{% if not user.get_profile in object.members.all and not user.get_profile == object.owner %}
 <form method = "post" action = "{% url user_join_idea object.pk %}">
   {% csrf_token %}
   <input type = "submit" value = "Join Project" />
 </form>
 {% else %}
+{% if not user.get_profile == object.owner %}
 <form method = "post" action = "{% url user_leave_idea object.pk %}">
   {% csrf_token %}
   <input type = "submit" value = "Leave Project" />
 </form>
+{% endif %}
 {% endif %}
 
 <h3>Description</h3>

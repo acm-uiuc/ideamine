@@ -143,7 +143,7 @@ def idea_update(request, object_id, **kwargs):
 def idea_join(request, object_id, *args, **kwargs):
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
-        if idea.is_member(request.user):
+        if idea.is_member(request.user) or idea.is_owner(request.user):
             return HttpResponse("You're already a member")
 
         idea.add_member(request.user)
