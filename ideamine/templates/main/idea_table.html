@@ -4,15 +4,15 @@
 <ul class="idealist">
 	{% for idea in object_list %}
 	<li class="idea">
+		<h2 class="members">{{ idea.members.all.count }}</h2>
 		<section class="info">
-			<h2 class="members">{{ idea.members.all.count }}</h2>
-			<div class="titleBlock"><a href="{% url idea_detail idea.pk %}">{{ idea.short_name|title }}</a></div>
+			<h3 class="titleBlock"><a href="{% url idea_detail idea.pk %}">{{ idea.short_name|title }}</a></h3>
 			<div class="progBar">Progress: </div>
 		</section>
 		<section class="tags">
 			<ul class="textboxlist-bits textboxlist tagBlock">
 			{% for tag in idea.tags.all %}
-			    <li class="textboxlist-bit textboxlist-bit-box"><a class="tag" href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
+			    <li class="textboxlist-bit textboxlist-bit-box tag"><a class="tag" href="{{ tag.get_absolute_url|urlencode }}">{{ tag }}</a></li>
 			{% endfor %}
 			</ul>
 		</section>
