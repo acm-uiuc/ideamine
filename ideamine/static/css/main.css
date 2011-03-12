@@ -77,10 +77,6 @@ div#contentContainer {
 	width: 600px;
 	margin: 0 50px;
 }
-ul.idealist {
-	margin: 0;
-	clear: both;
-}
 div#contentContainer a.button {
 	float: left;
 	margin-bottom: 5px;
@@ -90,12 +86,14 @@ div#contentContainer a.button {
 ul.idealist {
 	list-style: none;
 	padding: 0;
+	margin: 0;
+	clear: both;
 }
 ul.idealist li.idea {
 	border: solid black 1px;
 	border-top: 0;
 }
-ul.idealist li:first-child {
+ul.idealist li.idea:first-child {
 	border: solid black 1px;
 }
 ul.idealist h2.members {
@@ -173,108 +171,3 @@ a.button {
 	padding: 8px 5px;
 	width: auto;
 }
-
-
-
-/*
-#topbar {
-	width: 100%;
-	padding: 0;
-	background-image:url('gradient.jpg');
-	background-repeat:repeat-x;
-}
-
-body {
-	min-width:800px;
-	margin: 0;
-}
-
-#navigation {
-	margin: 0 1em;
-	text-align: left;
-}
-
-#user {
-	position: absolute;
-	right: 0;
-	margin: 0 1em;
-}
-
-#container {
-	padding-right: 400px;
-	margin: 1em;
-}
-
-#container .column{
-	position: relative;
-	float: left;
-}
-
-#left {
-	width: 100%;
-}
-
-*/
-/* Layout for side widgets */
-/*
-#right {
-	width: 400px;
-	margin-right: -400px;
-}
-#right .sidebar{
-	margin: 0 1em;
-}
-
-.idealist a {
-	color: black;
-	text-decoration: none;
-}
-
-.ideablock{
-	padding: 1em;
-	margin: 0 0 -1px 0;
-	border: solid 1px;
-}
-
-.ideablock .members{
-	float: left;
-	font-weight: bold;
-	font-size: 2em;
-}
-
-.ideablock .bar {
-	float: left;
-	margin: 0 1em;
-	width: 80%;
-}
-
-.titleBlock {
-	border: 1px;
-}
-
-.progBar {
-	width: 100%;
-	border: solid 1px;
-}
-
-.ideablock .tagBlock {
-	float: left;
-	border: 1px;
-	list-style-type: none;
-	padding: 0;
-}
-
-#footer {
-	clear: both;
-}
-
-.idealist {
-	list-style-type: none;
-	padding: 0;
-	margin: 0 2em;
-}
-
-.clear {
-	clear: both;
-}
-*/
