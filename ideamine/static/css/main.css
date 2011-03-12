@@ -73,9 +73,11 @@ nav ul#loginNav li a:hover {text-decoration: underline;}
 /* Main Content */
 div#contentContainer {
 	clear: both;
+	float: left;
 	font-size: 87.5%;
 	width: 600px;
 	margin: 0 50px;
+	
 }
 div#contentContainer a.button {
 	float: left;
@@ -88,10 +90,15 @@ ul.idealist {
 	padding: 0;
 	margin: 0;
 	clear: both;
+	float: left;
+	width: 100%;
 }
 ul.idealist li.idea {
 	border: solid black 1px;
 	border-top: 0;
+	clear: both;
+	float: left;
+	width: 100%;
 }
 ul.idealist li.idea:first-child {
 	border: solid black 1px;
@@ -100,6 +107,12 @@ ul.idealist h2.members {
 	font-size: 300%;
 	float: left;
 	margin: 0 25px;
+}
+ul.idealist section.info {
+	float: left;
+}
+ul.idealist section.tags {
+	float: right;
 }
 
 /* for non-editable tags */
@@ -112,11 +125,13 @@ ul.tagBlock {border: none;}
 
 /* Footer */
 footer#siteFooter {
-	margin-top: 25px;
-	margin-bottom: 25px;
+	margin: 25px 0;
 	font-size: 70%;
 	text-align: center;
 	color: #999999;
+	clear: both;
+	float: left;
+	width: 100%;
 }
 
 /* Custom submit button based on https://github.com/ubuwaits/css3-buttons. */
