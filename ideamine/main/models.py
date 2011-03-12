@@ -62,7 +62,7 @@ class Idea(models.Model):
     members = models.ManyToManyField(UserProfile, related_name='joined_ideas',
                                      through='JoinedUser', editable=False)
     progress = models.SmallIntegerField(default=0)
-    website = models.URLField(blank=True)
+    website = models.URLField(blank=True, verify_exists=False)
 
     def confirm_member(self, user):
         try:
