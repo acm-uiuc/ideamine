@@ -17,15 +17,21 @@ import main.signals
 import json
 
 def index(request):
+    """Renders the index page."""
     c = RequestContext(request, {})
     return render_to_response("index.html", c)
 
 def user_create(request, *args, **kwargs):
+    """Creates a new user."""
+    # If data was posted, process it.
     if request.method == 'POST':
         new_user = User()
         user_form = UserCreationForm(request.POST, instance=new_user)
         if user_form.is_valid():
             user_form.save()
+            # TODO: There's probably a better way to do this. Fix ASAP.
+            # (Existing code force-sets the backend for authentication to
+            # make Django believe the user has already been authenticated)
             new_user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, new_user)
             redirect_to = new_user.get_profile().get_absolute_url()
@@ -39,6 +45,7 @@ def user_create(request, *args, **kwargs):
 
 @login_required
 def user_detail(request, object_id, **kwargs):
+    """Returns the user_detail page on a given user. Requires login."""
     update_user = get_object_or_404(User, pk=object_id)
     request_profile = request.user.get_profile()
     if request_profile.can_update_user(update_user):
@@ -51,6 +58,7 @@ def user_detail(request, object_id, **kwargs):
 
 @login_required
 def user_update(request, object_id, **kwargs):
+    """Updates the user profile for a given user, if allowed. Requires login."""
     update_user = get_object_or_404(User, pk=object_id)
     request_profile = request.user.get_profile()
     if not request_profile.can_update_user(update_user):
@@ -66,11 +74,13 @@ def user_update(request, object_id, **kwargs):
 
 @login_required
 def redirect_to_user(request, *args, **kwargs):
+    """Redirects to the current user's profile, or the login page if no user."""
     redirect_to = request.user.get_profile().get_absolute_url()
     return HttpResponseRedirect(redirect_to)
 
 @login_required
 def idea_create(request, *args, **kwargs):
+    """Creates a new idea, or renders the form to do so. Requires login."""
     if request.method == 'POST':
         idea = Idea(owner=request.user.get_profile())
         idea_form = generate_idea_form(IdeaForm, idea, request.POST)
@@ -88,6 +98,7 @@ def idea_create(request, *args, **kwargs):
 
 @login_required
 def idea_detail(request, object_id, **kwargs):
+    """Returns the details on a given idea. Requires login."""
     update_idea = get_object_or_404(Idea, pk=object_id)
     request_profile = request.user.get_profile()
     if update_idea.can_destroy(request.user):
@@ -113,6 +124,7 @@ def idea_detail(request, object_id, **kwargs):
 
 @login_required
 def idea_update(request, object_id, **kwargs):
+    """Updates the details on a given idea, if allowed. Requires login."""
     update_idea = get_object_or_404(Idea, pk=object_id)
     if not request.user.get_profile().can_update_idea(update_idea):
         return HttpResponseForbidden()
@@ -130,6 +142,7 @@ def idea_update(request, object_id, **kwargs):
 
 @login_required
 def idea_join(request, object_id, *args, **kwargs):
+    """Allows current user to join given idea. Requires login."""
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.is_member(request.user) or idea.is_owner(request.user):
@@ -147,6 +160,7 @@ def idea_join(request, object_id, *args, **kwargs):
 
 @login_required
 def idea_leave(request, object_id, *args, **kwargs):
+    """Allows current user to leave given idea. Requires login."""
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.is_member(request.user):
@@ -164,6 +178,7 @@ def idea_leave(request, object_id, *args, **kwargs):
 
 @login_required
 def idea_destroy(request, object_id, *kwargs):
+    """Deletes given idea, if allowed for current user. Requires login."""
     if request.method == 'POST':
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.can_destroy(request.user):
@@ -180,6 +195,10 @@ def idea_destroy(request, object_id, *kwargs):
 
 @login_required
 def confirm_member(request, object_id, *args, **kwargs):
+    """Confirms a member of an idea, so they can perform some admin tasks.
+    
+    Requires login by a user who is allowed to edit the idea.
+    """
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         if idea.can_edit(request.user):
@@ -208,6 +227,7 @@ def confirm_member(request, object_id, *args, **kwargs):
     return HttpResponseRedirect(redirect_to)
 
 def tag_suggest(request, **kwargs):
+    """Function to autocomplete possible tags when creating ideas."""
     response = HttpResponse(mimetype="text/json")
     search = request.GET['search']
     tags = Tag.objects.filter(name__istartswith=search)
@@ -226,6 +246,7 @@ def tag_ideas(request, object_name, **kwargs):
     return render_to_response('main/idea_list.html', c)
 
 def tag_filter_ideas(request, tag_list, **kwargs):
+    """Filters returned ideas by a given tag."""
     ideas = Idea.objects.all()
     tags_list = tag_list.split('/')
     for tag_string in tags_list:
@@ -240,6 +261,7 @@ def tag_filter_ideas(request, tag_list, **kwargs):
 
 @login_required
 def image_upload(request, object_id, *args, **kwargs):
+    """Uploads a new image to a given idea. Login required."""
     if request.method == "POST":
         idea = get_object_or_404(Idea, pk=object_id)
         new_image = Image(idea=idea, uploader=request.user.get_profile())

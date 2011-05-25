@@ -61,6 +61,8 @@ class Idea(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     members = models.ManyToManyField(UserProfile, related_name='joined_ideas',
                                      through='JoinedUser', editable=False)
+    # TODO: Implement usage of progress in site functionality
+    # Progress is a number between 0 and 100 representing percent complete
     progress = models.SmallIntegerField(default=0)
     website = models.URLField(blank=True, verify_exists=False)
 
